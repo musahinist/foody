@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:foody/app/order/page/order_page.dart';
-import 'package:foody/app/product/page/product_page.dart';
-
-import '../../profile/page/profile_page.dart';
-import '../../../common/widget/restaaurant_card_widget.dart';
 import 'package:get/route_manager.dart';
 
+import '../../../common/widget/pageview_dot_indicator_widget.dart';
+import '../../../common/widget/restaaurant_card_widget.dart';
+import '../../../common/widget/search_appbar_widget.dart';
+import '../../order/page/order_page.dart';
+import '../../product/page/product_page.dart';
+import '../../profile/page/profile_page.dart';
 import 'favorites_page.dart';
-import 'cart_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({
@@ -75,100 +75,163 @@ class HomePageBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.lightGreen[50],
-        leading: const Icon(
-          CupertinoIcons.slider_horizontal_3,
-          color: Colors.black,
-        ),
-        elevation: 0,
-        title: TextField(
-          cursorColor: Colors.black,
-          keyboardType: TextInputType.text,
-          textInputAction: TextInputAction.go,
-          decoration: InputDecoration(
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(40),
-                  borderSide: BorderSide.none),
-              filled: true,
-              fillColor: Colors.blueGrey[100],
-              contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-              hintText: 'Search...'),
-        ),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.all(16),
-            child: Icon(
-              CupertinoIcons.search,
-              color: Colors.black,
-            ),
-          ),
-        ],
-      ),
+      appBar: SearchAppBar(),
       backgroundColor: Colors.lightGreen[50],
       body: ListView(
         physics: const BouncingScrollPhysics(),
         children: [
+          SliderWidget(),
           const Padding(
             padding: EdgeInsets.all(16.0),
             child: Text(
-              'Main \nCategories',
+              'Main Categories',
               style: TextStyle(
-                fontSize: 36,
+                fontSize: 28,
                 fontWeight: FontWeight.bold,
               ),
             ),
           ),
-          const SizedBox(height: 24),
-          SizedBox(
-            height: 112,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              physics: const BouncingScrollPhysics(),
-              children: const [
-                MenuButtonWidget(
-                  isActive: true,
-                  icon: Icons.fastfood,
-                  label: 'Burgers Mis',
+          //   const SizedBox(height: 24),
+          const CategoryMenu(),
+          RestaurantCardWidget(onPressed: () {
+            Get.toNamed(ProductPage.$PATH);
+          }),
+          RestaurantCardWidget(onPressed: () {
+            Get.toNamed(ProductPage.$PATH);
+          }),
+          RestaurantCardWidget(onPressed: () {
+            Get.toNamed(ProductPage.$PATH);
+          }),
+          RestaurantCardWidget(onPressed: () {
+            Get.toNamed(ProductPage.$PATH);
+          }),
+          RestaurantCardWidget(onPressed: () {
+            Get.toNamed(ProductPage.$PATH);
+          }),
+        ],
+      ),
+    );
+  }
+}
+
+class SliderWidget extends StatelessWidget {
+  const SliderWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        SizedBox(
+          height: 160,
+          width: double.maxFinite,
+          child: PageView(
+            children: [
+              const CampaignCard(),
+              const CampaignCard(),
+              const CampaignCard(),
+            ],
+          ),
+        ),
+        PageViewDotIndicator(
+          currentIndex: 1,
+          dotCount: 3,
+        )
+      ],
+    );
+  }
+}
+
+class CampaignCard extends StatelessWidget {
+  const CampaignCard({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: GestureDetector(
+        onTap: () {},
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(32),
+            color: Colors.black.withOpacity(.7),
+            image: const DecorationImage(
+                image: NetworkImage(
+                    'https://www.droetker.com.tr/Recipe/Recipes/droetker.com.tr/tr-tr/baking/image-thumb__25342__RecipeDetail/karisik-pizza.jpg'),
+                fit: BoxFit.cover),
+          ),
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(32),
+              color: Colors.black.withOpacity(.7),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "50% off",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 32,
+                      fontWeight: FontWeight.bold),
                 ),
-                MenuButtonWidget(
-                  icon: Icons.local_pizza,
-                  label: 'Pizza Hots',
-                ),
-                MenuButtonWidget(
-                  icon: Icons.restaurant_menu,
-                  label: 'KeBap Döner',
-                ),
-                MenuButtonWidget(
-                  icon: Icons.signal_cellular_4_bar,
-                  label: 'Snacks Bar',
-                ),
-                MenuButtonWidget(
-                  icon: Icons.translate,
-                  label: 'Chenese Food',
-                ),
-                MenuButtonWidget(
-                  icon: Icons.home,
-                  label: 'Home Food',
+                Text(
+                  "the full price of pizza",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18,
+                  ),
                 ),
               ],
             ),
           ),
-          RestaurantCardWidget(onPressed: () {
-            Get.toNamed(ProductPage.$PATH);
-          }),
-          RestaurantCardWidget(onPressed: () {
-            Get.toNamed(ProductPage.$PATH);
-          }),
-          RestaurantCardWidget(onPressed: () {
-            Get.toNamed(ProductPage.$PATH);
-          }),
-          RestaurantCardWidget(onPressed: () {
-            Get.toNamed(ProductPage.$PATH);
-          }),
-          RestaurantCardWidget(onPressed: () {
-            Get.toNamed(ProductPage.$PATH);
-          }),
+        ),
+      ),
+    );
+  }
+}
+
+class CategoryMenu extends StatelessWidget {
+  const CategoryMenu({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 112,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        physics: const BouncingScrollPhysics(),
+        children: const [
+          MenuButtonWidget(
+            isActive: true,
+            icon: Icons.fastfood,
+            label: 'Burgers Mis',
+          ),
+          MenuButtonWidget(
+            icon: Icons.local_pizza,
+            label: 'Pizza Hots',
+          ),
+          MenuButtonWidget(
+            icon: Icons.restaurant_menu,
+            label: 'KeBap Döner',
+          ),
+          MenuButtonWidget(
+            icon: Icons.signal_cellular_4_bar,
+            label: 'Snacks Bar',
+          ),
+          MenuButtonWidget(
+            icon: Icons.translate,
+            label: 'Chenese Food',
+          ),
+          MenuButtonWidget(
+            icon: Icons.home,
+            label: 'Home Food',
+          ),
         ],
       ),
     );

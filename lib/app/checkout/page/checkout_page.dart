@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foody/app/home/page/home_page.dart';
+import '../../home/page/home_page.dart';
 import 'package:get/route_manager.dart';
 
 class CheckoutPage extends StatelessWidget {

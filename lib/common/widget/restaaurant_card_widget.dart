@@ -25,7 +25,8 @@ class RestaurantCardWidget extends StatelessWidget {
                 borderRadius: BorderRadius.circular(32),
                 image: const DecorationImage(
                     image: NetworkImage(
-                        'https://s01.sgp1.cdn.digitaloceanspaces.com/article/143395-pysnzzzleh-1593090551.jpg')),
+                        'https://s01.sgp1.cdn.digitaloceanspaces.com/article/143395-pysnzzzleh-1593090551.jpg'),
+                    fit: BoxFit.cover),
               ),
               child: Align(
                 alignment: Alignment.bottomLeft,
@@ -38,43 +39,56 @@ class RestaurantCardWidget extends StatelessWidget {
                         topRight: Radius.circular(32),
                         bottomLeft: Radius.circular(32)),
                   ),
-                  child: const Center(
-                      child: Text(
-                    '25-30 min.',
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  )),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: const [
+                      Text(
+                        '25-30 min.',
+                        style: TextStyle(
+                          fontSize: 14,
+                          // fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      Text(
+                        '₺35.',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                'Big Burger',
-                style: Theme.of(context).textTheme.headline6,
+          ListTile(
+            title: Text(
+              'Big Burger',
+              style: Theme.of(context).textTheme.headline6,
+            ),
+            subtitle: const Text("McDonald's"),
+            leading: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: const [
+                Icon(
+                  Icons.star,
+                  color: Colors.amber,
+                ),
+                Text(
+                  '4.7',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            trailing: IconButton(
+              icon: const Icon(
+                Icons.bookmark,
+                color: Colors.amber,
               ),
-              FlatButton.icon(
-                  label: const Text('4.7'),
-                  icon: const Icon(
-                    Icons.star,
-                    color: Colors.amber,
-                  ),
-                  onPressed: () {}),
-            ],
+              onPressed: () {},
+            ),
           ),
-          Row(
-            children: const [
-              Text('Burgers - Snacks'),
-              SizedBox(width: 16),
-              Text('₺'),
-              Text('₺'),
-              Text('₺')
-            ],
-          )
         ],
       ),
     );

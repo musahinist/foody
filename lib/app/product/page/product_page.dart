@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:foody/app/home/page/cart_page.dart';
 import 'package:get/route_manager.dart';
 
+import '../../../common/widget/item_counter_widget.dart';
+import '../../home/page/cart_page.dart';
 import '../widget/sliver_appbar_widget.dart';
 
 class ProductPage extends StatefulWidget {
@@ -28,14 +29,16 @@ class _ProductPageState extends State<ProductPage> {
             onPressed: () {
               Get.toNamed(CartPage.$PATH);
             },
-            child: Icon(Icons.shopping_cart),
+            child: const Icon(Icons.shopping_cart),
           ),
           CircleAvatar(
             radius: 12,
             backgroundColor: Colors.blue,
-            child: Text("$itemCount",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold)),
+            child: Text(
+              '$itemCount',
+              textAlign: TextAlign.center,
+              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+            ),
           )
         ],
       ),
@@ -60,21 +63,22 @@ class _ProductPageState extends State<ProductPage> {
                       Icon(Icons.star_half, color: Colors.amber)
                     ],
                   ),
-                  trailing: Container(
-                      //   padding: const EdgeInsets.all(5),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: IconButton(
-                          onPressed: () {
-                            isLiked = !isLiked;
-                            setState(() {});
-                          },
-                          icon: Icon(
-                            isLiked ? Icons.favorite : Icons.favorite_outline,
-                            color: isLiked ? Colors.red : Colors.grey,
-                          ))),
+                  trailing: InkWell(
+                    onTap: () {
+                      isLiked = !isLiked;
+                      setState(() {});
+                    },
+                    child: Container(
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Colors.grey),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        child: Icon(
+                          isLiked ? Icons.favorite : Icons.favorite_outline,
+                          color: isLiked ? Colors.red : Colors.grey,
+                        )),
+                  ),
                 ),
                 const Padding(
                   padding: EdgeInsets.all(16.0),
@@ -96,7 +100,7 @@ class _ProductPageState extends State<ProductPage> {
                       },
                     ),
                     ListTile(
-                      title: Text('Lettuce'),
+                      title: const Text('Lettuce'),
                       trailing: isSelected[1]
                           ? const Icon(Icons.check_circle, color: Colors.green)
                           : const Icon(Icons.add),
@@ -107,7 +111,7 @@ class _ProductPageState extends State<ProductPage> {
                       },
                     ),
                     ListTile(
-                      title: Text('Onions'),
+                      title: const Text('Onions'),
                       trailing: isSelected[2]
                           ? const Icon(Icons.check_circle, color: Colors.green)
                           : const Icon(Icons.add),
@@ -124,28 +128,9 @@ class _ProductPageState extends State<ProductPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Container(
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: const Icon(Icons.add)),
-                      const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text('1'),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: const Icon(Icons.remove),
-                      ),
-                      const Spacer(),
+                      ItemCounterWidget(),
                       Text('TL $price',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold))
                     ],
                   ),
@@ -178,61 +163,3 @@ class _ProductPageState extends State<ProductPage> {
     );
   }
 }
-
-// class MySliverAppBar extends SliverPersistentHeaderDelegate {
-//   final double expandedHeight;
-
-//   MySliverAppBar({required this.expandedHeight});
-
-//   @override
-//   Widget build(
-//       BuildContext context, double shrinkOffset, bool overlapsContent) {
-//     return Stack(
-//       fit: StackFit.expand,
-//       overflow: Overflow.visible,
-//       children: [
-//         Image.network(
-//           "https://images.pexels.com/photos/396547/pexels-photo-396547.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500",
-//           fit: BoxFit.cover,
-//         ),
-//         Center(
-//           child: Opacity(
-//             opacity: shrinkOffset / expandedHeight,
-//             child: Text(
-//               "MySliverAppBar",
-//               style: TextStyle(
-//                 color: Colors.white,
-//                 fontWeight: FontWeight.w700,
-//                 fontSize: 23,
-//               ),
-//             ),
-//           ),
-//         ),
-//         Positioned(
-//           top: expandedHeight / 2 - shrinkOffset,
-//           left: MediaQuery.of(context).size.width / 4,
-//           child: Opacity(
-//             opacity: (1 - shrinkOffset / expandedHeight),
-//             child: Card(
-//               elevation: 10,
-//               child: SizedBox(
-//                 height: expandedHeight,
-//                 width: MediaQuery.of(context).size.width / 2,
-//                 child: FlutterLogo(),
-//               ),
-//             ),
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-
-//   @override
-//   double get maxExtent => expandedHeight;
-
-//   @override
-//   double get minExtent => kToolbarHeight;
-
-//   @override
-//   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => true;
-// }

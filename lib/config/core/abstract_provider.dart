@@ -1,7 +1,8 @@
 import 'package:dio/dio.dart';
-import '../util/http/http_exception.dart';
-import '../util/http/http_manager.dart';
 import 'package:meta/meta.dart';
+
+import '../../util/http/http_exception.dart';
+import '../../util/http/http_manager.dart';
 
 abstract class AbstractProvider<E> {
   AbstractProvider(

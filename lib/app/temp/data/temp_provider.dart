@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 
-import '../../../config/abstract_provider.dart';
+import '../../../config/core/abstract_provider.dart';
 
 class TempProvider extends AbstractProvider {
   TempProvider({

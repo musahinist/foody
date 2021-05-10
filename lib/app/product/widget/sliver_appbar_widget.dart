@@ -26,7 +26,7 @@ class SliverAppBarWidget extends StatelessWidget {
         centerTitle: true,
         background: Container(
           decoration: BoxDecoration(
-            color: Colors.black,
+            //   color: Colors.black,
             image: DecorationImage(
               image: NetworkImage(
                 "https://s01.sgp1.cdn.digitaloceanspaces.com/article/143395-pysnzzzleh-1593090551.jpg",

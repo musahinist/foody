@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'config/app_router.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 
 import 'app/home/page/home_page.dart';
+import 'config/router/app_router.dart';
 import 'util/log/log.dart';
 import 'util/log/simple_bloc_observer.dart';
 
@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.amber,
       ),
+      home: const HomePage(),
       getPages: AppRouter.routes,
     );
   }

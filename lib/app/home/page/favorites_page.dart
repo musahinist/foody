@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:foody/app/product/page/product_page.dart';
+import 'package:get/route_manager.dart';
 
 import '../../../common/widget/restaaurant_card_widget.dart';
-import 'package:get/route_manager.dart';
+import '../../../common/widget/search_appbar_widget.dart';
+import '../../product/page/product_page.dart';
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({
@@ -22,36 +23,7 @@ class _FavoritesPageState extends State<FavoritesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.lightGreen[50],
-        leading: const Icon(
-          CupertinoIcons.slider_horizontal_3,
-          color: Colors.black,
-        ),
-        elevation: 0,
-        title: TextField(
-          cursorColor: Colors.black,
-          keyboardType: TextInputType.text,
-          textInputAction: TextInputAction.go,
-          decoration: InputDecoration(
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(40),
-                  borderSide: BorderSide.none),
-              filled: true,
-              fillColor: Colors.blueGrey[100],
-              contentPadding: const EdgeInsets.symmetric(horizontal: 20),
-              hintText: 'Search...'),
-        ),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.all(16),
-            child: Icon(
-              CupertinoIcons.search,
-              color: Colors.black,
-            ),
-          ),
-        ],
-      ),
+      appBar: SearchAppBar(),
       backgroundColor: Colors.lightGreen[50],
       body: ListView(
         physics: const BouncingScrollPhysics(),

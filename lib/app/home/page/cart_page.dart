@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:foody/app/checkout/page/checkout_page.dart';
+import '../../../common/widget/item_counter_widget.dart';
+import '../../checkout/page/checkout_page.dart';
 import 'package:get/route_manager.dart';
 
 class CartPage extends StatefulWidget {
@@ -103,30 +104,7 @@ class OrderSummaryList extends StatelessWidget {
                 children: [
                   Text("Cheese Burger"),
                   SizedBox(height: 5),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                          padding: const EdgeInsets.all(5),
-                          decoration: BoxDecoration(
-                            border: Border.all(color: Colors.grey),
-                            borderRadius: BorderRadius.circular(5),
-                          ),
-                          child: const Icon(Icons.add)),
-                      const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Text('1'),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(5),
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Colors.grey),
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                        child: const Icon(Icons.remove),
-                      ),
-                    ],
-                  ),
+                  ItemCounterWidget()
                 ],
               ),
               const Spacer(),

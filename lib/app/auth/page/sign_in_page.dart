@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
-
 import 'package:video_player/video_player.dart';
 
 import 'phone_register_page.dart';
 
 class SignInPage extends StatelessWidget {
+  const SignInPage({
+    Key? key,
+  }) : super(key: key);
+  static const String $PATH = 'signIn';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: Stack(
-          children: [
+          children: const <Widget>[
             // BackgroundVideo(),
-            const SizedBox.expand(
+            SizedBox.expand(
               child: Image(
                 image: AssetImage('asset/image/bg.jpg'),
                 fit: BoxFit.cover,
@@ -50,7 +53,7 @@ class _BackgroundVideoState extends State<BackgroundVideo> {
   @override
   Widget build(BuildContext context) {
     return Stack(
-      children: <Widget>[
+      children: const <Widget>[
         // SizedBox.expand(
         //   child: FittedBox(
         //     fit: BoxFit.cover,
@@ -111,21 +114,19 @@ class LoginWidget extends StatelessWidget {
           //   ),
           // ),
           // SizedBox(height: 24),
-          SizedBox(
+          const SizedBox(
             height: 80,
             child: Image(
-              image: AssetImage("asset/image/logo.png"),
+              image: AssetImage('asset/image/logo.png'),
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           SizedBox(
             width: 300,
             child: Column(
-              // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
+              children: const <Widget>[
                 Text(
-                  "Welcome to Foody",
+                  'Welcome to Foody',
                   style: TextStyle(
                       fontSize: 36,
                       fontWeight: FontWeight.bold,
@@ -133,7 +134,7 @@ class LoginWidget extends StatelessWidget {
                 ),
                 SizedBox(height: 24),
                 Text(
-                  "Enjoy deliveries from a varients restaurants.",
+                  'Enjoy deliveries from a varients restaurants.',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
@@ -145,95 +146,144 @@ class LoginWidget extends StatelessWidget {
             ),
           ),
 
-          SizedBox(height: 88),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                width: 140,
-                child: RaisedButton(
-                  onPressed: () {},
-                  shape: StadiumBorder(),
+          const SizedBox(height: 88),
+          SizedBox(
+            width: 300,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PhoneRegisterPage()));
+                  },
+                  title: const Text('With Apple'),
+                  icon: Icon(Icons.ac_unit),
                   color: Colors.grey[50],
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 12,
-                    ),
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          //    Icon(MaterialCommunityIcons.apple),
-                          Text("With Apple"),
-                        ],
-                      ),
-                    ),
-                  ),
                 ),
-              ),
-              SizedBox(width: 20),
-              Container(
-                width: 140,
-                child: RaisedButton(
-                  onPressed: () {},
-                  shape: StadiumBorder(),
-                  color: Color(0xFF4285F4),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 12,
-                    ),
-                    child: Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          // Icon(MaterialCommunityIcons.google,
-                          //     color: Colors.white),
-                          Text(
-                            "With Google",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+                IconElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => PhoneRegisterPage()));
+                  },
+                  title: const Text('With Google'),
+                  icon: Icon(Icons.ac_unit),
+                  color: const Color(0xFF4285F4),
                 ),
-              ),
-            ],
+                // SizedBox(
+                //   width: 140,
+                //   child: RaisedButton(
+                //     onPressed: () {},
+                //     shape: StadiumBorder(),
+                //     color: Colors.grey[50],
+                //     child: Padding(
+                //       padding: const EdgeInsets.symmetric(
+                //         vertical: 12,
+                //       ),
+                //       child: Container(
+                //         child: Row(
+                //           mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //           children: [
+                //             //    Icon(MaterialCommunityIcons.apple),
+                //             Text("With Apple"),
+                //           ],
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+                // SizedBox(width: 20),
+                // Container(
+                //   width: 140,
+                //   child: RaisedButton(
+                //     onPressed: () {},
+                //     shape: StadiumBorder(),
+                //     color: Color(0xFF4285F4),
+                //     child: Padding(
+                //       padding: const EdgeInsets.symmetric(
+                //         vertical: 12,
+                //       ),
+                //       child: Container(
+                //         child: Row(
+                //           mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //           children: [
+                //             // Icon(MaterialCommunityIcons.google,
+                //             //     color: Colors.white),
+                //             Text(
+                //               "With Google",
+                //               style: TextStyle(color: Colors.white),
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ),
+              ],
+            ),
           ),
 
           SizedBox(height: 24),
-          Container(
+          SizedBox(
             width: 300,
-            child: RaisedButton(
+            child: IconElevatedButton(
               onPressed: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => PhoneRegisterPage()));
               },
-              shape: StadiumBorder(),
-              color: Colors.amber[700],
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 12, horizontal: 36),
-                child: Container(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      //  Icon(MaterialCommunityIcons.cellphone_message,
-                      //       color: Colors.white),
-                      Text(
-                        "Countinue with phone",
-                        style: TextStyle(color: Colors.white),
-                      )
-                    ],
-                  ),
-                ),
-              ),
+              title: const Text('Countinue with phone'),
+              icon: Icon(Icons.ac_unit),
             ),
           ),
+
           SizedBox(height: 24),
         ],
+      ),
+    );
+  }
+}
+
+class IconElevatedButton extends StatelessWidget {
+  const IconElevatedButton({
+    Key? key,
+    required this.onPressed,
+    required this.title,
+    required this.icon,
+    this.color = Colors.amber,
+  }) : super(key: key);
+  final Text title;
+  final Color? color;
+  final VoidCallback onPressed;
+  final Icon icon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
+      child: ElevatedButton(
+        onPressed: onPressed,
+        style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(color),
+            shape: MaterialStateProperty.all(const StadiumBorder())),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                icon,
+                const SizedBox(width: 8),
+                title,
+              ],
+            ),
+          ),
+        ),
       ),
     );
   }

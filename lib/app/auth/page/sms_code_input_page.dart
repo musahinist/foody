@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
-import 'package:foody/app/home/page/home_page.dart';
+import '../../home/page/home_page.dart';
 import 'package:get/route_manager.dart';
 // import 'package:sms_autofill/sms_autofill.dart';
 

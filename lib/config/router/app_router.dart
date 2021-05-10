@@ -1,17 +1,21 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foody/app/auth/page/onboarding_page.dart';
-import 'package:foody/app/checkout/page/checkout_page.dart';
-import 'package:foody/app/home/page/cart_page.dart';
-import 'package:foody/app/product/page/product_page.dart';
-
-import '../app/home/page/home_page.dart';
 import 'package:get/get.dart';
+
+import '../../app/auth/page/onboarding_page.dart';
+import '../../app/auth/page/sign_in_page.dart';
+import '../../app/checkout/page/checkout_page.dart';
+import '../../app/home/page/cart_page.dart';
+import '../../app/home/page/home_page.dart';
+import '../../app/product/page/product_page.dart';
 
 class AppRouter {
   static final List<GetPage> routes = <GetPage>[
     GetPage(
       name: OnboardingPage.$PATH,
       page: () => const OnboardingPage(),
+    ),
+    GetPage(
+      name: SignInPage.$PATH,
+      page: () => const SignInPage(),
     ),
     GetPage(
       name: HomePage.$PATH,

@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import '../../config/app_config.dart';
+import '../../config/constant/app_config.dart';
 import '../log/dio_logger.dart';
 
 class HttpManager {
