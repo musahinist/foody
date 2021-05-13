@@ -12,7 +12,7 @@ class OnboardingPage extends StatefulWidget {
   const OnboardingPage({
     Key? key,
   }) : super(key: key);
-  static const String $PATH = '/';
+  static const String $PATH = 'onboard';
   @override
   _OnboardingPageState createState() => _OnboardingPageState();
 }
@@ -93,7 +93,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
             ),
             PageViewDotIndicator(
                 dotCount: content.length, currentIndex: currentIndex),
-            SizedBox(height: 36),
+            const SizedBox(height: 36),
             PrimaryElevatedButton(
               onPressed: onPressed,
               title: currentIndex < content.length - 1 ? 'Next' : 'Start',

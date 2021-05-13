@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../auth/bloc/authentication_bloc.dart';
+
 class ProfilePage extends StatefulWidget {
   const ProfilePage({
     Key? key,
@@ -10,17 +12,33 @@ class ProfilePage extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfilePage> {
+  late AuthBloc bloc;
+  @override
+  void initState() {
+    super.initState();
+    bloc = AuthBloc();
+  }
+
+  @override
+  void dispose() {
+    bloc.close();
+    // TODO: implement dispose
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.lightGreen[50],
         elevation: 0,
-        actions: const [
-          Padding(
-            padding: EdgeInsets.all(16),
-            child: Icon(Icons.exit_to_app),
-          ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.exit_to_app),
+            onPressed: () {
+              bloc.add(const SignOutEvent());
+            },
+          )
         ],
       ),
       backgroundColor: Colors.lightGreen[50],

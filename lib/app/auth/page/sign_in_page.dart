@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/route_manager.dart';
 import 'package:video_player/video_player.dart';
 
+import '../bloc/authentication_bloc.dart';
+import 'login/login_page.dart';
 import 'phone_register_page.dart';
 
 class SignInPage extends StatelessWidget {
@@ -87,33 +91,6 @@ class LoginWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.end,
         children: <Widget>[
-          //  Container(),
-          // Container(
-          //   padding: EdgeInsets.all(16),
-          //   width: 300,
-          //   height: 200,
-          //   color: Colors.grey.withAlpha(200),
-          //   child: Column(
-          //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-          //     children: <Widget>[
-          //       TextField(
-          //         decoration: InputDecoration(
-          //           hintText: 'Username',
-          //         ),
-          //       ),
-          //       TextField(
-          //         decoration: InputDecoration(
-          //           hintText: 'Password',
-          //         ),
-          //       ),
-          //       RaisedButton(
-          //         child: Text('Login'),
-          //         onPressed: () {},
-          //       ),
-          //     ],
-          //   ),
-          // ),
-          // SizedBox(height: 24),
           const SizedBox(
             height: 80,
             child: Image(
@@ -145,7 +122,6 @@ class LoginWidget extends StatelessWidget {
               ],
             ),
           ),
-
           const SizedBox(height: 88),
           SizedBox(
             width: 300,
@@ -160,77 +136,38 @@ class LoginWidget extends StatelessWidget {
                             builder: (context) => PhoneRegisterPage()));
                   },
                   title: const Text('With Apple'),
-                  icon: Icon(Icons.ac_unit),
+                  icon: const Icon(Icons.ac_unit),
                   color: Colors.grey[50],
                 ),
                 IconElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => PhoneRegisterPage()));
+                    BlocProvider.of<AuthBloc>(context)
+                        .add(const GoogleSignInEvent());
                   },
                   title: const Text('With Google'),
-                  icon: Icon(Icons.ac_unit),
+                  icon: const Icon(Icons.ac_unit),
                   color: const Color(0xFF4285F4),
                 ),
-                // SizedBox(
-                //   width: 140,
-                //   child: RaisedButton(
-                //     onPressed: () {},
-                //     shape: StadiumBorder(),
-                //     color: Colors.grey[50],
-                //     child: Padding(
-                //       padding: const EdgeInsets.symmetric(
-                //         vertical: 12,
-                //       ),
-                //       child: Container(
-                //         child: Row(
-                //           mainAxisAlignment: MainAxisAlignment.spaceAround,
-                //           children: [
-                //             //    Icon(MaterialCommunityIcons.apple),
-                //             Text("With Apple"),
-                //           ],
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // ),
-                // SizedBox(width: 20),
-                // Container(
-                //   width: 140,
-                //   child: RaisedButton(
-                //     onPressed: () {},
-                //     shape: StadiumBorder(),
-                //     color: Color(0xFF4285F4),
-                //     child: Padding(
-                //       padding: const EdgeInsets.symmetric(
-                //         vertical: 12,
-                //       ),
-                //       child: Container(
-                //         child: Row(
-                //           mainAxisAlignment: MainAxisAlignment.spaceAround,
-                //           children: [
-                //             // Icon(MaterialCommunityIcons.google,
-                //             //     color: Colors.white),
-                //             Text(
-                //               "With Google",
-                //               style: TextStyle(color: Colors.white),
-                //             ),
-                //           ],
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // ),
               ],
             ),
           ),
-
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
           SizedBox(
             width: 300,
             child: IconElevatedButton(
+              onPressed: () {
+                // Navigator.push(context,
+                //     MaterialPageRoute(builder: (context) => LoginPage()));
+                Get.toNamed(LoginPage.$PATH);
+              },
+              title: const Text('Countinue with Email'),
+              icon: const Icon(Icons.ac_unit),
+            ),
+          ),
+          SizedBox(
+            width: 300,
+            child: IconElevatedButton(
+              color: Colors.green,
               onPressed: () {
                 Navigator.push(
                     context,
@@ -238,11 +175,10 @@ class LoginWidget extends StatelessWidget {
                         builder: (context) => PhoneRegisterPage()));
               },
               title: const Text('Countinue with phone'),
-              icon: Icon(Icons.ac_unit),
+              icon: const Icon(Icons.ac_unit),
             ),
           ),
-
-          SizedBox(height: 24),
+          const SizedBox(height: 24),
         ],
       ),
     );

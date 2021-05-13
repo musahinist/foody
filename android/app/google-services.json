@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "317210409930",
+    "firebase_url": "https://saide-starter.firebaseio.com",
+    "project_id": "saide-starter",
+    "storage_bucket": "saide-starter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:317210409930:android:52c2b0766ddf3ff381ed33",
+        "android_client_info": {
+          "package_name": "com.example.foody"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "317210409930-n6s5343sqo018hruhdgnj42mdkijrmj6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.foody",
+            "certificate_hash": "34a6382f457146ebdbf1fcaf27a533714897e9bc"
+          }
+        },
+        {
+          "client_id": "317210409930-dnnu46sdmi2gqu3gni1asntqlcadgqks.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBGb2NrwUcnBywadVgrXPXQIuLCFI2GmO4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "317210409930-dnnu46sdmi2gqu3gni1asntqlcadgqks.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

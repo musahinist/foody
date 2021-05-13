@@ -13,7 +13,7 @@ class TempProvider extends AbstractProvider {
   Future<Response> getTemp() async {
     try {
       final Response response =
-          await get(innerPath: '', queryParameters: {'count': '20'});
+          await get(innerPath: 'path', queryParameters: {'count': '20'});
       return response;
     } catch (e) {
       rethrow;

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
-import '../../home/page/home_page.dart';
 import 'package:get/route_manager.dart';
+
+import '../../home/page/home_page.dart';
 // import 'package:sms_autofill/sms_autofill.dart';
 
 class SmsCodeInputPage extends StatefulWidget {
@@ -11,7 +12,7 @@ class SmsCodeInputPage extends StatefulWidget {
 
 class _SmsCodeInputPageState extends State<SmsCodeInputPage> {
   final TextEditingController ctrl = TextEditingController();
-  var isButtonActive = false;
+  bool isButtonActive = false;
   @override
   Widget build(BuildContext context) {
     return Unfocuser(
@@ -25,29 +26,28 @@ class _SmsCodeInputPageState extends State<SmsCodeInputPage> {
             padding: const EdgeInsets.all(24.0),
             child: Center(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text(
-                    "Enter Code Send To Your Number",
+                  const Text(
+                    'Enter Code Send To Your Number',
                     style: TextStyle(
                       fontSize: 36,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  SizedBox(height: 24),
-                  Text(
-                    "We will send you a sms one time code.",
+                  const SizedBox(height: 24),
+                  const Text(
+                    'We will send you a sms one time code.',
                     style: TextStyle(
                       color: Colors.grey,
                       fontSize: 16,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  SizedBox(height: 24),
+                  const SizedBox(height: 24),
                   // Padding(
                   //     padding: const EdgeInsets.all(30.0),
                   //     child: SmsAutoFillWidget()),
-                  Container(
+                  SizedBox(
                     width: 300,
                     child: RaisedButton(
                       onPressed: isButtonActive
@@ -60,23 +60,21 @@ class _SmsCodeInputPageState extends State<SmsCodeInputPage> {
                               Get.offAllNamed(HomePage.$PATH);
                             }
                           : null,
-                      shape: StadiumBorder(),
+                      shape: const StadiumBorder(),
                       color: Colors.amber[700],
                       child: Padding(
                         padding: const EdgeInsets.symmetric(
                             vertical: 16, horizontal: 36),
-                        child: Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              // Icon(MaterialCommunityIcons.cellphone_message,
-                              //     color: Colors.white),
-                              Text(
-                                "Next",
-                                style: TextStyle(color: Colors.white),
-                              )
-                            ],
-                          ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: const [
+                            // Icon(MaterialCommunityIcons.cellphone_message,
+                            //     color: Colors.white),
+                            Text(
+                              'Next',
+                              style: TextStyle(color: Colors.white),
+                            )
+                          ],
                         ),
                       ),
                     ),

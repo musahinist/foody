@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'package:foody/app/home/widget/outline_stadium_button_wdiget.dart';
 import 'package:get/route_manager.dart';
 
 import '../../../common/widget/pageview_dot_indicator_widget.dart';
@@ -8,6 +11,8 @@ import '../../../common/widget/search_appbar_widget.dart';
 import '../../order/page/order_page.dart';
 import '../../product/page/product_page.dart';
 import '../../profile/page/profile_page.dart';
+import '../bloc/home_bloc.dart';
+import '../data/model/product.dart';
 import 'favorites_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -22,12 +27,6 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = [
-    const HomePageBody(),
-    const FavoritesPage(),
-    const OrderPage(),
-    const ProfilePage()
-  ];
   void _onTabTapped(int index) {
     setState(() {
       _selectedIndex = index;
@@ -37,7 +36,25 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _pages.elementAt(_selectedIndex),
+      body: BlocBuilder<HomePageDataBloc, HomePageDataState>(
+        builder: (context, state) {
+          if (state is HomePageDataLoadedState) {
+            switch (_selectedIndex) {
+              case 0:
+                return MenuPage(products: state.products);
+              case 1:
+                return FavoritesPage(products: state.products);
+              case 2:
+                return const OrderPage();
+              case 3:
+                return const ProfilePage();
+              default:
+                return MenuPage(products: state.products);
+            }
+          }
+          return const Center(child: CircularProgressIndicator.adaptive());
+        },
+      ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.amber,
         selectedItemColor: Colors.white,
@@ -67,49 +84,74 @@ class _HomePageState extends State<HomePage> {
   }
 }
 
-class HomePageBody extends StatelessWidget {
-  const HomePageBody({
+class MenuPage extends StatelessWidget {
+  const MenuPage({
+    Key? key,
+    required this.products,
+  }) : super(key: key);
+  final products;
+  @override
+  Widget build(BuildContext context) {
+    //  final state = context.watch<HomePageDataBloc>().state;
+
+    return Scaffold(
+        appBar: const SearchAppBar(),
+        backgroundColor: Colors.lightGreen[50],
+        body: CustomScrollView(
+          physics: const BouncingScrollPhysics(),
+          slivers: [
+            //   SliverSearchAppBar(),
+            const SliderWidget(),
+            const CategoryMenu(),
+            SliverList(
+              delegate: SliverChildBuilderDelegate((context, index) {
+                final Product product = products[index];
+                return RestaurantCardWidget(
+                    product: product,
+                    onPressed: () {
+                      Get.toNamed(ProductPage.$PATH);
+                    });
+              }, childCount: products.length),
+            )
+          ],
+        )
+        // ListView(
+        //   physics: const BouncingScrollPhysics(),
+        //   children: [
+        //     SliderWidget(),
+        //     const Padding(
+        //       padding: EdgeInsets.all(16.0),
+        //       child: Text(
+        //         'Main Categories',
+        //         style: TextStyle(
+        //           fontSize: 28,
+        //           fontWeight: FontWeight.bold,
+        //         ),
+        //       ),
+        //     ),
+        //     //   const SizedBox(height: 24),
+        //     const CategoryMenu(),
+        //     RestaurantCardWidget(onPressed: () {
+        //       Get.toNamed(ProductPage.$PATH);
+        //     }),
+
+        //   ],
+        // ),
+        );
+  }
+}
+
+class SliverSearchAppBar extends StatelessWidget {
+  const SliverSearchAppBar({
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: SearchAppBar(),
-      backgroundColor: Colors.lightGreen[50],
-      body: ListView(
-        physics: const BouncingScrollPhysics(),
-        children: [
-          SliderWidget(),
-          const Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text(
-              'Main Categories',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          //   const SizedBox(height: 24),
-          const CategoryMenu(),
-          RestaurantCardWidget(onPressed: () {
-            Get.toNamed(ProductPage.$PATH);
-          }),
-          RestaurantCardWidget(onPressed: () {
-            Get.toNamed(ProductPage.$PATH);
-          }),
-          RestaurantCardWidget(onPressed: () {
-            Get.toNamed(ProductPage.$PATH);
-          }),
-          RestaurantCardWidget(onPressed: () {
-            Get.toNamed(ProductPage.$PATH);
-          }),
-          RestaurantCardWidget(onPressed: () {
-            Get.toNamed(ProductPage.$PATH);
-          }),
-        ],
-      ),
+    return const SliverAppBar(
+      backgroundColor: Colors.red,
+      elevation: 0,
+      floating: true,
     );
   }
 }
@@ -121,24 +163,53 @@ class SliderWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          height: 160,
-          width: double.maxFinite,
-          child: PageView(
-            children: [
-              const CampaignCard(),
-              const CampaignCard(),
-              const CampaignCard(),
-            ],
-          ),
+    return SliverAppBar(
+      expandedHeight: 220.0,
+      backgroundColor: Colors.lightGreen[50],
+      // elevation: 0,
+      flexibleSpace: FlexibleSpaceBar(
+        background: Column(
+          // crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ListTile(
+              dense: true,
+              title: const Text(
+                'Special Offers',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              trailing: ButtonOutlineStadiumWidget(
+                title: 'View All',
+                onPressed: () {},
+              ),
+            ),
+            SizedBox(
+              height: 160,
+              child: Stack(
+                alignment: AlignmentDirectional.bottomCenter,
+                children: [
+                  PageView(
+                    children: const [
+                      CampaignCard(),
+                      CampaignCard(),
+                      CampaignCard(),
+                    ],
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: PageViewDotIndicator(
+                      currentIndex: 1,
+                      dotCount: 3,
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
         ),
-        PageViewDotIndicator(
-          currentIndex: 1,
-          dotCount: 3,
-        )
-      ],
+      ),
     );
   }
 }
@@ -151,7 +222,7 @@ class CampaignCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
       child: GestureDetector(
         onTap: () {},
         child: Container(
@@ -170,16 +241,16 @@ class CampaignCard extends StatelessWidget {
             ),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+              children: const [
                 Text(
-                  "50% off",
+                  '50% off',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 32,
                       fontWeight: FontWeight.bold),
                 ),
                 Text(
-                  "the full price of pizza",
+                  'the full price of pizza',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,
@@ -201,38 +272,73 @@ class CategoryMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 112,
-      child: ListView(
-        scrollDirection: Axis.horizontal,
-        physics: const BouncingScrollPhysics(),
-        children: const [
-          MenuButtonWidget(
-            isActive: true,
-            icon: Icons.fastfood,
-            label: 'Burgers Mis',
-          ),
-          MenuButtonWidget(
-            icon: Icons.local_pizza,
-            label: 'Pizza Hots',
-          ),
-          MenuButtonWidget(
-            icon: Icons.restaurant_menu,
-            label: 'KeBap Döner',
-          ),
-          MenuButtonWidget(
-            icon: Icons.signal_cellular_4_bar,
-            label: 'Snacks Bar',
-          ),
-          MenuButtonWidget(
-            icon: Icons.translate,
-            label: 'Chenese Food',
-          ),
-          MenuButtonWidget(
-            icon: Icons.home,
-            label: 'Home Food',
-          ),
-        ],
+    return SliverAppBar(
+      expandedHeight: 160.0,
+      backgroundColor: Colors.lightGreen[50],
+      elevation: 0,
+      floating: true,
+      // pinned: true,
+      flexibleSpace: FlexibleSpaceBar(
+        //  title:
+        // Text('Burger Story', style: TextStyle(color: Colors.white)),
+        //  centerTitle: true,
+        background:
+            //   const SizedBox(height: 24),
+            Column(
+          children: [
+            ListTile(
+              dense: true,
+              title: const Text(
+                'Populer Food',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              trailing: ButtonOutlineStadiumWidget(
+                title: 'View All',
+                onPressed: () {},
+              ),
+            ),
+            SizedBox(
+              height: 112,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                physics: const BouncingScrollPhysics(),
+                children: const [
+                  MenuButtonWidget(
+                    isActive: true,
+                    icon: Icons.fastfood,
+                    label: 'Burgers Mis',
+                  ),
+                  MenuButtonWidget(
+                    icon: Icons.local_pizza,
+                    label: 'Pizza Hots',
+                  ),
+                  MenuButtonWidget(
+                    icon: Icons.restaurant_menu,
+                    label: 'KeBap Döner',
+                  ),
+                  MenuButtonWidget(
+                    icon: Icons.signal_cellular_4_bar,
+                    label: 'Snacks Bar',
+                  ),
+                  MenuButtonWidget(
+                    icon: Icons.translate,
+                    label: 'Chenese Food',
+                  ),
+                  MenuButtonWidget(
+                    icon: Icons.home,
+                    label: 'Home Food',
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+        // RestaurantCardWidget(onPressed: () {
+        //   Get.toNamed(ProductPage.$PATH);
+        // }),
       ),
     );
   }

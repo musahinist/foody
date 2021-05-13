@@ -44,6 +44,11 @@ class _ProductPageState extends State<ProductPage> {
       ),
       body: CustomScrollView(
         slivers: [
+          const SliverAppBar(
+            elevation: 0,
+            //  floating: true,
+            pinned: true,
+          ),
           const SliverAppBarWidget(),
           SliverPadding(
             padding: const EdgeInsets.all(16),

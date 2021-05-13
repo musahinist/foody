@@ -28,7 +28,7 @@ linter:
     # ------------------------------------- #
 
     # Make constructors the first thing in every class
-    sort_constructors_first: true
+    sort_constructors_first: false
 
     # The new tabs vs. spaces. Choose wisely
     prefer_single_quotes: true
@@ -42,3 +42,5 @@ linter:
 
     # Back to the 80s
     lines_longer_than_80_chars: true
+
+    sort_pub_dependencies: false

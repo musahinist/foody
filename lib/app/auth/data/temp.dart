@@ -1,11 +1,10 @@
 import 'dart:convert';
 
 class Temp {
-  String name;
   Temp({
     required this.name,
   });
-
+  String name;
   Temp copyWith({
     String? name,
   }) {

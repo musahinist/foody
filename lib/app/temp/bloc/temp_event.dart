@@ -6,3 +6,11 @@ abstract class TempEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+class TempRequestedEvent extends TempEvent {
+  const TempRequestedEvent();
+  @override
+  List<Object> get props => [];
+  @override
+  String toString() => 'TempRequestedEvent';
+}

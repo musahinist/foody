@@ -2,11 +2,15 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
+import '../../app/home/data/model/product.dart';
+
 class RestaurantCardWidget extends StatelessWidget {
   const RestaurantCardWidget({
     Key? key,
     required this.onPressed,
+    required this.product,
   }) : super(key: key);
+  final Product product;
   final VoidCallback onPressed;
   @override
   Widget build(BuildContext context) {
@@ -23,10 +27,8 @@ class RestaurantCardWidget extends StatelessWidget {
               decoration: BoxDecoration(
                 color: Colors.amber,
                 borderRadius: BorderRadius.circular(32),
-                image: const DecorationImage(
-                    image: NetworkImage(
-                        'https://s01.sgp1.cdn.digitaloceanspaces.com/article/143395-pysnzzzleh-1593090551.jpg'),
-                    fit: BoxFit.cover),
+                image: DecorationImage(
+                    image: NetworkImage(product.imgurl), fit: BoxFit.cover),
               ),
               child: Align(
                 alignment: Alignment.bottomLeft,

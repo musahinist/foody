@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../home/page/home_page.dart';
 import 'package:get/route_manager.dart';
+
+import '../../home/page/home_page.dart';
 
 class CheckoutPage extends StatelessWidget {
   const CheckoutPage({
@@ -11,7 +12,7 @@ class CheckoutPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("CheckOut"),
+        title: const Text('CheckOut'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -21,7 +22,7 @@ class CheckoutPage extends StatelessWidget {
             Container(
               height: 160,
               decoration: BoxDecoration(
-                  gradient: LinearGradient(
+                  gradient: const LinearGradient(
                       begin: Alignment.topRight,
                       end: Alignment.bottomLeft,
                       colors: [Colors.amber, Colors.purple]),
@@ -32,44 +33,44 @@ class CheckoutPage extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Musa ŞAHIN",
+                    const Text(
+                      'Musa ŞAHIN',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18,
                       ),
                     ),
                     Row(
-                      children: [
+                      children: const [
                         Text(
-                          "TL 135.00",
+                          'TL 135.00',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 18,
                               fontWeight: FontWeight.bold),
                         ),
                         Spacer(),
-                        Text("5/25")
+                        Text('5/25')
                       ],
                     )
                   ],
                 ),
               ),
             ),
-            SizedBox(height: 24),
+            const SizedBox(height: 24),
             Row(
-              children: [
+              children: const [
                 Icon(Icons.place),
                 Text(
-                  "Address",
+                  'Address',
                   style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ],
             ),
-            Divider(),
-            Text(
-                "Göztepe mahallesi Fahrettin Kerim Gökay Caddesi Özlem Sok No:30 Kadıköy İSTANBUL"),
-            SizedBox(height: 24),
+            const Divider(),
+            const Text(
+                'Göztepe mahallesi Fahrettin Kerim Gökay Caddesi Özlem Sok No:30 Kadıköy İSTANBUL'),
+            const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
                 Get.offAllNamed(HomePage.$PATH);
@@ -79,7 +80,7 @@ class CheckoutPage extends StatelessWidget {
                       padding: const EdgeInsets.all(24.0),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
-                        children: [
+                        children: const [
                           Icon(
                             Icons.check_circle,
                             color: Colors.green,
@@ -87,7 +88,7 @@ class CheckoutPage extends StatelessWidget {
                           ),
                           SizedBox(height: 24),
                           Text(
-                              "Your payment has been made successfully, you can follow the order details from the Order tab."),
+                              'Your payment has been made successfully, you can follow the order details from the Order tab.'),
                         ],
                       ),
                     ),

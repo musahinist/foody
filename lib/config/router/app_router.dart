@@ -1,25 +1,55 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 
+import '../../app/auth/bloc/authentication_bloc.dart';
+import '../../app/auth/page/login/login_page.dart';
 import '../../app/auth/page/onboarding_page.dart';
 import '../../app/auth/page/sign_in_page.dart';
+import '../../app/auth/page/splash_page.dart';
 import '../../app/checkout/page/checkout_page.dart';
+import '../../app/home/bloc/home_bloc.dart';
 import '../../app/home/page/cart_page.dart';
 import '../../app/home/page/home_page.dart';
 import '../../app/product/page/product_page.dart';
+import '../../app/temp/bloc/temp_bloc.dart';
+import '../../app/temp/page/temp_page.dart';
 
 class AppRouter {
   static final List<GetPage> routes = <GetPage>[
     GetPage(
+      name: SplashPage.$PATH,
+      page: () => BlocProvider<AuthBloc>(
+        create: (context) => AuthBloc()..add(const AppStartedEvent()),
+        child: const SplashPage(),
+      ),
+    ),
+    GetPage(
       name: OnboardingPage.$PATH,
-      page: () => const OnboardingPage(),
+      page: () => BlocProvider<AuthBloc>(
+        create: (context) => AuthBloc(),
+        child: const OnboardingPage(),
+      ),
     ),
     GetPage(
       name: SignInPage.$PATH,
-      page: () => const SignInPage(),
+      page: () => BlocProvider<AuthBloc>(
+        create: (context) => AuthBloc(),
+        child: const SignInPage(),
+      ),
+    ),
+    GetPage(
+      name: LoginPage.$PATH,
+      page: () => BlocProvider<AuthBloc>(
+        create: (context) => AuthBloc(),
+        child: const LoginPage(),
+      ),
     ),
     GetPage(
       name: HomePage.$PATH,
-      page: () => const HomePage(),
+      page: () => BlocProvider<HomePageDataBloc>(
+          create: (context) =>
+              HomePageDataBloc()..add(const HomePageDataRequestedEvent()),
+          child: const HomePage()),
     ),
     GetPage(
       name: ProductPage.$PATH,
@@ -33,22 +63,11 @@ class AppRouter {
       name: CheckoutPage.$PATH,
       page: () => const CheckoutPage(),
     ),
-    // GetPage(
-    //   name: DeviceInfoPage.$PATH,
-    //   page: () => BlocProvider<DeviceInfoBloc>(
-    //       create: (context) =>
-    //           DeviceInfoBloc()..add(const DeviceInfoRequestEvent()),
-    //       child: const DeviceInfoPage()),
-    // ),
-    // GetPage(
-    //   name: FlowingTextPage.$PATH,
-    //   page: () => const FlowingTextPage(),
-    // ),
-    // GetPage(
-    //   name: RedditPage.$PATH,
-    //   page: () => BlocProvider<RedditBloc>(
-    //       create: (context) => RedditBloc()..add(const RedditRequestEvent()),
-    //       child: const RedditPage()),
-    // ),
+    GetPage(
+      name: TempPage.$PATH,
+      page: () => BlocProvider<TempBloc>(
+          create: (context) => TempBloc()..add(const TempRequestedEvent()),
+          child: const HomePage()),
+    ),
   ];
 }

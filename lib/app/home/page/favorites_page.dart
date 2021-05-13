@@ -1,15 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:get/route_manager.dart';
 
-import '../../../common/widget/restaaurant_card_widget.dart';
 import '../../../common/widget/search_appbar_widget.dart';
-import '../../product/page/product_page.dart';
+import '../data/model/product.dart';
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({
     Key? key,
+    required this.products,
   }) : super(key: key);
+
+  final List<Product> products;
 
   @override
   _FavoritesPageState createState() => _FavoritesPageState();
@@ -27,8 +28,8 @@ class _FavoritesPageState extends State<FavoritesPage> {
       backgroundColor: Colors.lightGreen[50],
       body: ListView(
         physics: const BouncingScrollPhysics(),
-        children: [
-          const Padding(
+        children: const [
+          Padding(
             padding: EdgeInsets.all(16.0),
             child: Text(
               'Favorite \nRestaurants',
@@ -51,22 +52,22 @@ class _FavoritesPageState extends State<FavoritesPage> {
           //         setState(() => currentIndex = index),
           //   ),
           // ),
-          const SizedBox(height: 8),
-          RestaurantCardWidget(onPressed: () {
-            Get.toNamed(ProductPage.$PATH);
-          }),
-          RestaurantCardWidget(onPressed: () {
-            Get.toNamed(ProductPage.$PATH);
-          }),
-          RestaurantCardWidget(onPressed: () {
-            Get.toNamed(ProductPage.$PATH);
-          }),
-          RestaurantCardWidget(onPressed: () {
-            Get.toNamed(ProductPage.$PATH);
-          }),
-          RestaurantCardWidget(onPressed: () {
-            Get.toNamed(ProductPage.$PATH);
-          }),
+          SizedBox(height: 8),
+          // RestaurantCardWidget(onPressed: () {
+          //   Get.toNamed(ProductPage.$PATH);
+          // }),
+          // RestaurantCardWidget(onPressed: () {
+          //   Get.toNamed(ProductPage.$PATH);
+          // }),
+          // RestaurantCardWidget(onPressed: () {
+          //   Get.toNamed(ProductPage.$PATH);
+          // }),
+          // RestaurantCardWidget(onPressed: () {
+          //   Get.toNamed(ProductPage.$PATH);
+          // }),
+          // RestaurantCardWidget(onPressed: () {
+          //   Get.toNamed(ProductPage.$PATH);
+          // }),
         ],
       ),
     );
