@@ -22,10 +22,10 @@ class HomePageDataBloc extends Bloc<HomePageDataEvent, HomePageDataState> {
     if (event is HomePageDataRequestedEvent) {
       yield const HomePageDataLoadingState();
       try {
-        final products = await _homeRepo.getProducts();
+        final List<Product> products = await _homeRepo.getProducts();
         yield HomePageDataLoadedState(products: products);
       } catch (e) {
-        yield HomePageDataErrorState(error: HttpException.handleError(e));
+        yield HomePageDataErrorState(error: e);
       }
     }
   }

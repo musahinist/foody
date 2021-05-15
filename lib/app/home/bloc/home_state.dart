@@ -21,12 +21,12 @@ class HomePageDataLoadedState extends HomePageDataState {
   final List<Product> products;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [products];
 }
 
 class HomePageDataErrorState extends HomePageDataState {
   const HomePageDataErrorState({required this.error});
-  final String error;
+  final error;
   @override
-  List<Object> get props => [];
+  List<Object> get props => [error];
 }

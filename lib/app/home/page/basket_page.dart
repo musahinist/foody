@@ -4,21 +4,21 @@ import 'package:get/route_manager.dart';
 import '../../../common/widget/item_counter_widget.dart';
 import '../../checkout/page/checkout_page.dart';
 
-class CartPage extends StatefulWidget {
-  const CartPage({
+class BasketPage extends StatefulWidget {
+  const BasketPage({
     Key? key,
   }) : super(key: key);
-  static const String $PATH = 'cart';
+  static const String $PATH = 'Basket';
   @override
-  _CartPageState createState() => _CartPageState();
+  _BasketPageState createState() => _BasketPageState();
 }
 
-class _CartPageState extends State<CartPage> {
+class _BasketPageState extends State<BasketPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('My Cart'),
+          title: const Text('My Basket'),
         ),
         body: ListView(
           children: [

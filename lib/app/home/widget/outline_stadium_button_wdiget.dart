@@ -9,15 +9,19 @@ class ButtonOutlineStadiumWidget extends StatelessWidget {
       : super(key: key);
   @override
   Widget build(BuildContext context) {
-    return OutlinedButton(
-      style: ButtonStyle(
-          //  backgroundColor: MaterialStateProperty.all(Colors.amber),
-          shape: MaterialStateProperty.all(const StadiumBorder()),
-          side: MaterialStateProperty.all(const BorderSide(color: Colors.amber))
-          // foregroundColor: MaterialStateProperty.all(Colors.amber),
-          ),
-      onPressed: onPressed,
-      child: Text(title),
+    return SizedBox(
+      height: 28,
+      child: OutlinedButton(
+        style: ButtonStyle(
+            //  backgroundColor: MaterialStateProperty.all(Colors.amber),
+            shape: MaterialStateProperty.all(const StadiumBorder()),
+            side:
+                MaterialStateProperty.all(const BorderSide(color: Colors.amber))
+            // foregroundColor: MaterialStateProperty.all(Colors.amber),
+            ),
+        onPressed: onPressed,
+        child: Text(title),
+      ),
     );
   }
 }

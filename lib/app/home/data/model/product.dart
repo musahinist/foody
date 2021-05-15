@@ -4,41 +4,31 @@ class Product {
   String name;
   String restaurant;
   String imgurl;
-  String duration;
-  String price;
-  String rank;
-  String category;
-  List<String> toppings;
+  // String duration;
+  // String price;
+  // String rank;
+  // String category;
+  // List<String> toppings;
   Product(
+    // this.duration,
+    // this.price,
+    // this.rank,
+    // this.category,
+    // this.toppings,
     this.name,
     this.restaurant,
     this.imgurl,
-    this.duration,
-    this.price,
-    this.rank,
-    this.category,
-    this.toppings,
   );
 
   Product copyWith({
     String? name,
     String? restaurant,
     String? imgurl,
-    String? duration,
-    String? price,
-    String? rank,
-    String? category,
-    List<String>? toppings,
   }) {
     return Product(
       name ?? this.name,
       restaurant ?? this.restaurant,
       imgurl ?? this.imgurl,
-      duration ?? this.duration,
-      price ?? this.price,
-      rank ?? this.rank,
-      category ?? this.category,
-      toppings ?? this.toppings,
     );
   }
 
@@ -47,11 +37,6 @@ class Product {
       'name': name,
       'restaurant': restaurant,
       'imgurl': imgurl,
-      'duration': duration,
-      'price': price,
-      'rank': rank,
-      'category': category,
-      'toppings': toppings,
     };
   }
 
@@ -60,11 +45,6 @@ class Product {
       map['name'],
       map['restaurant'],
       map['imgurl'],
-      map['duration'],
-      map['price'],
-      map['rank'],
-      map['category'],
-      List<String>.from(map['toppings']),
     );
   }
 
@@ -74,7 +54,6 @@ class Product {
       Product.fromMap(json.decode(source));
 
   @override
-  String toString() {
-    return 'Product(name: $name, restaurant: $restaurant, imgurl: $imgurl, duration: $duration, price: $price, rank: $rank, category: $category, toppings: $toppings)';
-  }
+  String toString() =>
+      'Product(name: $name, restaurant: $restaurant, imgurl: $imgurl)';
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/route_manager.dart';
 
 import '../../auth/bloc/authentication_bloc.dart';
 
@@ -36,7 +37,23 @@ class _ProfilePageState extends State<ProfilePage> {
           IconButton(
             icon: const Icon(Icons.exit_to_app),
             onPressed: () {
-              bloc.add(const SignOutEvent());
+              Get.dialog(
+                AlertDialog(
+                  content: Text(
+                      'Are you sure you want to log out of the application?'),
+                  actions: [
+                    ElevatedButton(
+                      child: Text('OK'),
+                      onPressed: () {
+                        bloc.add(const SignOutEvent());
+                      },
+                      style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all(Colors.red)),
+                    )
+                  ],
+                ),
+              );
             },
           )
         ],

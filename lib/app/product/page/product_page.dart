@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 
 import '../../../common/widget/item_counter_widget.dart';
-import '../../home/page/cart_page.dart';
+import '../../home/page/basket_page.dart';
 import '../widget/sliver_appbar_widget.dart';
 
 class ProductPage extends StatefulWidget {
@@ -20,16 +20,18 @@ class _ProductPageState extends State<ProductPage> {
   bool isLiked = false;
   double price = 45.00;
   int itemCount = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: Stack(
         children: [
           FloatingActionButton(
+            heroTag: "basket",
             onPressed: () {
-              Get.toNamed(CartPage.$PATH);
+              Get.toNamed(BasketPage.$PATH);
             },
-            child: const Icon(Icons.shopping_cart),
+            child: const Icon(Icons.shopping_bag),
           ),
           CircleAvatar(
             radius: 12,
@@ -136,28 +138,27 @@ class _ProductPageState extends State<ProductPage> {
                       ItemCounterWidget(),
                       Text('TL $price',
                           style: const TextStyle(
-                              fontSize: 18, fontWeight: FontWeight.bold))
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      itemCount++;
-                      setState(() {});
-                    },
-                    style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(Colors.amber[700]),
-                      shape: MaterialStateProperty.all(const StadiumBorder()),
-                    ),
-                    child: const Center(
-                      child: Padding(
-                        padding: EdgeInsets.all(16),
-                        child: Text('Add To Cart'),
+                              fontSize: 18, fontWeight: FontWeight.bold)),
+                      SizedBox(
+                        height: 32,
+                        // width: 32,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            itemCount++;
+                            setState(() {});
+                          },
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all(Colors.amber[700]),
+                            shape: MaterialStateProperty.all(
+                                const StadiumBorder()),
+                          ),
+                          child: const Center(
+                            child: Text('Add To Basket'),
+                          ),
+                        ),
                       ),
-                    ),
+                    ],
                   ),
                 ),
               ]),

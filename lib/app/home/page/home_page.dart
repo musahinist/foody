@@ -1,18 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import 'package:foody/app/home/widget/outline_stadium_button_wdiget.dart';
 import 'package:get/route_manager.dart';
 
 import '../../../common/widget/pageview_dot_indicator_widget.dart';
 import '../../../common/widget/restaaurant_card_widget.dart';
 import '../../../common/widget/search_appbar_widget.dart';
-import '../../order/page/order_page.dart';
 import '../../product/page/product_page.dart';
 import '../../profile/page/profile_page.dart';
+import '../../tracking/page/tracking_page.dart';
 import '../bloc/home_bloc.dart';
 import '../data/model/product.dart';
+import '../widget/outline_stadium_button_wdiget.dart';
+import 'basket_page.dart';
 import 'favorites_page.dart';
 
 class HomePage extends StatefulWidget {
@@ -45,7 +45,7 @@ class _HomePageState extends State<HomePage> {
               case 1:
                 return FavoritesPage(products: state.products);
               case 2:
-                return const OrderPage();
+                return const BasketPage();
               case 3:
                 return const ProfilePage();
               default:
@@ -55,29 +55,82 @@ class _HomePageState extends State<HomePage> {
           return const Center(child: CircularProgressIndicator.adaptive());
         },
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.amber,
-        selectedItemColor: Colors.white,
-        type: BottomNavigationBarType.fixed,
-        currentIndex: _selectedIndex,
-        onTap: _onTabTapped,
-        items: const <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: Icon(Icons.fastfood),
-            label: 'Menu',
+      floatingActionButton: Visibility(
+        visible: false,
+        child: Stack(
+          children: [
+            FloatingActionButton(
+              onPressed: () {
+                Get.toNamed(TrackingPage.$PATH);
+              },
+              heroTag: 'motobike',
+              backgroundColor: Colors.green,
+              child: const Icon(
+                Icons.delivery_dining,
+                color: Colors.white,
+              ),
+            ),
+            CircleAvatar(
+              radius: 10,
+              backgroundColor: Colors.blue,
+              child: Text(
+                '1',
+                textAlign: TextAlign.center,
+                style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+              ),
+            )
+          ],
+        ),
+      ),
+      //  floatingActionButtonLocation: FloatingActionButtonLocation.,
+      bottomNavigationBar: Stack(
+        children: [
+          BottomNavigationBar(
+            backgroundColor: Colors.amber,
+            elevation: 0,
+            selectedItemColor: Colors.white,
+            type: BottomNavigationBarType.fixed,
+            currentIndex: _selectedIndex,
+            onTap: _onTabTapped,
+            items: const <BottomNavigationBarItem>[
+              BottomNavigationBarItem(
+                icon: Icon(Icons.fastfood),
+                label: 'Menu',
+              ),
+              BottomNavigationBarItem(
+                icon: SizedBox(child: Icon(Icons.favorite)),
+                label: 'Favorites',
+              ),
+              BottomNavigationBarItem(
+                icon: Hero(tag: 'basket', child: Icon(Icons.shopping_bag)),
+                label: 'Basket',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                label: 'Profile',
+              ),
+            ],
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favorites',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_basket),
-            label: 'Order',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
-          ),
+          Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: const [
+                SizedBox(),
+                IgnorePointer(
+                  child: CircleAvatar(
+                    radius: 10,
+                    backgroundColor: Colors.blue,
+                    child: Text(
+                      '1',
+                      style:
+                          TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          )
         ],
       ),
     );
@@ -89,55 +142,33 @@ class MenuPage extends StatelessWidget {
     Key? key,
     required this.products,
   }) : super(key: key);
-  final products;
+  final List<Product> products;
   @override
   Widget build(BuildContext context) {
     //  final state = context.watch<HomePageDataBloc>().state;
 
     return Scaffold(
-        appBar: const SearchAppBar(),
-        backgroundColor: Colors.lightGreen[50],
-        body: CustomScrollView(
-          physics: const BouncingScrollPhysics(),
-          slivers: [
-            //   SliverSearchAppBar(),
-            const SliderWidget(),
-            const CategoryMenu(),
-            SliverList(
-              delegate: SliverChildBuilderDelegate((context, index) {
-                final Product product = products[index];
-                return RestaurantCardWidget(
-                    product: product,
-                    onPressed: () {
-                      Get.toNamed(ProductPage.$PATH);
-                    });
-              }, childCount: products.length),
-            )
-          ],
-        )
-        // ListView(
-        //   physics: const BouncingScrollPhysics(),
-        //   children: [
-        //     SliderWidget(),
-        //     const Padding(
-        //       padding: EdgeInsets.all(16.0),
-        //       child: Text(
-        //         'Main Categories',
-        //         style: TextStyle(
-        //           fontSize: 28,
-        //           fontWeight: FontWeight.bold,
-        //         ),
-        //       ),
-        //     ),
-        //     //   const SizedBox(height: 24),
-        //     const CategoryMenu(),
-        //     RestaurantCardWidget(onPressed: () {
-        //       Get.toNamed(ProductPage.$PATH);
-        //     }),
-
-        //   ],
-        // ),
-        );
+      appBar: const SearchAppBar(),
+      backgroundColor: Colors.lightGreen[50],
+      body: CustomScrollView(
+        physics: const BouncingScrollPhysics(),
+        slivers: [
+          //   SliverSearchAppBar(),
+          const SliderWidget(),
+          const CategoryMenu(),
+          SliverList(
+            delegate: SliverChildBuilderDelegate((context, index) {
+              final Product product = products[index];
+              return RestaurantCardWidget(
+                  product: product,
+                  onPressed: () {
+                    Get.toNamed(ProductPage.$PATH);
+                  });
+            }, childCount: products.length),
+          )
+        ],
+      ),
+    );
   }
 }
 
@@ -275,7 +306,7 @@ class CategoryMenu extends StatelessWidget {
     return SliverAppBar(
       expandedHeight: 160.0,
       backgroundColor: Colors.lightGreen[50],
-      elevation: 0,
+      //  elevation: 0,
       floating: true,
       // pinned: true,
       flexibleSpace: FlexibleSpaceBar(

@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
+import 'package:get_storage/get_storage.dart';
 
 import 'config/router/app_router.dart';
 import 'util/log/log.dart';
@@ -10,6 +11,7 @@ import 'util/log/simple_bloc_observer.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await GetStorage.init('MyPref');
   Bloc.observer = SimpleBlocObserver();
   Log.init();
   runApp(MyApp());

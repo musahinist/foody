@@ -1,75 +1,68 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:foody/app/product/page/product_page.dart';
+import 'package:foody/common/widget/restaaurant_card_widget.dart';
+import 'package:get/route_manager.dart';
 
 import '../../../common/widget/search_appbar_widget.dart';
 import '../data/model/product.dart';
+import 'home_page.dart';
 
-class FavoritesPage extends StatefulWidget {
+class FavoritesPage extends StatelessWidget {
   const FavoritesPage({
     Key? key,
     required this.products,
   }) : super(key: key);
 
   final List<Product> products;
-
-  @override
-  _FavoritesPageState createState() => _FavoritesPageState();
-}
-
-class _FavoritesPageState extends State<FavoritesPage> {
-  List<String> labels = ['All Restaurants', 'My Address'];
-
-  int currentIndex = 0;
+//  final List<String> labels = ['All Restaurants', 'My Address'];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: SearchAppBar(),
+        appBar: const SearchAppBar(),
+        backgroundColor: Colors.lightGreen[50],
+        body: CustomScrollView(
+          physics: const BouncingScrollPhysics(),
+          slivers: [
+            //   SliverSearchAppBar(),
+            const SliderWidget(),
+            const FavoriteHeader(),
+            SliverList(
+              delegate: SliverChildBuilderDelegate((context, index) {
+                final Product product = products[index];
+                return RestaurantCardWidget(
+                    product: product,
+                    onPressed: () {
+                      Get.toNamed(ProductPage.$PATH);
+                    });
+              }, childCount: products.length),
+            )
+          ],
+        ));
+  }
+}
+
+class FavoriteHeader extends StatelessWidget {
+  const FavoriteHeader({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SliverAppBar(
+      expandedHeight: 20,
       backgroundColor: Colors.lightGreen[50],
-      body: ListView(
-        physics: const BouncingScrollPhysics(),
-        children: const [
-          Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text(
-              'Favorite \nRestaurants',
-              style: TextStyle(
-                fontSize: 36,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-          // SizedBox(
-          //   height: 75,
-          //   child: ToggleBar(
-          //     labels: labels,
-          //     textColor: Colors.grey,
-          //     labelTextStyle: Theme.of(context).textTheme.headline6,
-          //     selectedTextColor: Colors.black,
-          //     backgroundColor: Colors.blueGrey[100],
-          //     selectedTabColor: Colors.lightGreen[50],
-          //     onSelectionUpdated: (index) =>
-          //         setState(() => currentIndex = index),
-          //   ),
-          // ),
-          SizedBox(height: 8),
-          // RestaurantCardWidget(onPressed: () {
-          //   Get.toNamed(ProductPage.$PATH);
-          // }),
-          // RestaurantCardWidget(onPressed: () {
-          //   Get.toNamed(ProductPage.$PATH);
-          // }),
-          // RestaurantCardWidget(onPressed: () {
-          //   Get.toNamed(ProductPage.$PATH);
-          // }),
-          // RestaurantCardWidget(onPressed: () {
-          //   Get.toNamed(ProductPage.$PATH);
-          // }),
-          // RestaurantCardWidget(onPressed: () {
-          //   Get.toNamed(ProductPage.$PATH);
-          // }),
-        ],
+      // elevation: 0,
+      floating: true,
+      title: const Text(
+        'Favorites',
+        style: TextStyle(
+          fontSize: 22,
+          fontWeight: FontWeight.bold,
+        ),
       ),
+      pinned: true,
     );
   }
 }

@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -8,6 +9,7 @@ class AuthRepo {
   TempProvider tempProvider = TempProvider();
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   Future<User?> signInWithGoogle() async {
     final GoogleSignInAccount googleUser = (await _googleSignIn.signIn())!;
@@ -38,12 +40,12 @@ class AuthRepo {
     }
   }
 
-  Future<UserCredential> signUp(
-      {required String email, required String password}) async {
-    return await _firebaseAuth.createUserWithEmailAndPassword(
+  Future<void> signUp({required String email, required String password}) async {
+    await _firebaseAuth.createUserWithEmailAndPassword(
       email: email,
       password: password,
     );
+    await addUser();
   }
 
   Future<void> signOut() async {
@@ -56,6 +58,26 @@ class AuthRepo {
   Future<bool> isSignedIn() async {
     final currentUser = _firebaseAuth.currentUser;
     return currentUser != null;
+  }
+
+  Future addUser() async {
+    try {
+      final user = _firebaseAuth.currentUser;
+      final userRef = FirebaseFirestore.instance.collection('users');
+
+      userRef.doc(user?.uid).set({
+        "email": user?.email,
+        "name": user?.displayName,
+        "imgurl": user?.photoURL,
+        "phone": user?.phoneNumber,
+      });
+      // final products = await productRef.get().then((snapshot) => snapshot.docs
+      //     .map<Product>((doc) => Product.fromMap(doc.data()))
+      //     .toList());
+      // return products;
+    } on FirebaseException {
+      rethrow;
+    }
   }
 
   Future<String?> getUser() async {

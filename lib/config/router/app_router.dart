@@ -8,11 +8,12 @@ import '../../app/auth/page/sign_in_page.dart';
 import '../../app/auth/page/splash_page.dart';
 import '../../app/checkout/page/checkout_page.dart';
 import '../../app/home/bloc/home_bloc.dart';
-import '../../app/home/page/cart_page.dart';
+import '../../app/home/page/basket_page.dart';
 import '../../app/home/page/home_page.dart';
 import '../../app/product/page/product_page.dart';
 import '../../app/temp/bloc/temp_bloc.dart';
 import '../../app/temp/page/temp_page.dart';
+import '../../app/tracking/page/tracking_page.dart';
 
 class AppRouter {
   static final List<GetPage> routes = <GetPage>[
@@ -56,8 +57,12 @@ class AppRouter {
       page: () => const ProductPage(),
     ),
     GetPage(
-      name: CartPage.$PATH,
-      page: () => const CartPage(),
+      name: BasketPage.$PATH,
+      page: () => const BasketPage(),
+    ),
+    GetPage(
+      name: TrackingPage.$PATH,
+      page: () => const TrackingPage(),
     ),
     GetPage(
       name: CheckoutPage.$PATH,
