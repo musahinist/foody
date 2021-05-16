@@ -77,7 +77,7 @@ class _HomePageState extends State<HomePage> {
         },
       ),
       floatingActionButton: Visibility(
-        visible: false,
+        visible: true,
         child: Stack(
           children: [
             FloatingActionButton(
@@ -252,9 +252,7 @@ class SliderWidget extends StatelessWidget {
                 ),
               ),
               trailing: ButtonOutlineStadiumWidget(
-                title: 'View All',
-                onPressed: () {},
-              ),
+                  title: 'View All', onPressed: () {}, color: Colors.amber),
             ),
             SizedBox(
               height: 160,
@@ -367,9 +365,7 @@ class CategoryMenu extends StatelessWidget {
                 ),
               ),
               trailing: ButtonOutlineStadiumWidget(
-                title: 'View All',
-                onPressed: () {},
-              ),
+                  title: 'View All', onPressed: () {}, color: Colors.amber),
             ),
             SizedBox(
               height: 112,

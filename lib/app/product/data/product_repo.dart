@@ -8,7 +8,7 @@ class ProductRepo {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final orderRef = FirebaseFirestore.instance.collection('orders');
-
+  final historyRef = FirebaseFirestore.instance.collection('history');
   Future addToBasket(order) async {
     try {
       final user = _firebaseAuth.currentUser;
@@ -21,13 +21,25 @@ class ProductRepo {
     }
   }
 
+  Future addToHistory(order) async {
+    try {
+      final user = _firebaseAuth.currentUser;
+
+      await historyRef
+          .doc(user?.uid)
+          .update({'history': FieldValue.arrayUnion(order)});
+    } on FirebaseException {
+      rethrow;
+    }
+  }
+
   Future removeFromBasket(order) async {
     try {
       final user = _firebaseAuth.currentUser;
 
-      await orderRef.doc(user?.uid).update({
-        'orders': FieldValue.arrayRemove([order])
-      });
+      await orderRef
+          .doc(user?.uid)
+          .update({'orders': FieldValue.arrayRemove(order)});
     } on FirebaseException {
       rethrow;
     }
@@ -38,9 +50,20 @@ class ProductRepo {
       final currentUser = _firebaseAuth.currentUser;
       final orders = await orderRef.doc(currentUser?.uid).get();
       int count = orders.data()!["orders"].length;
-      orderCount = count;
+      orderCount = count; //Globak
       print(orderCount);
       return orders;
+    } on FirebaseException {
+      rethrow;
+    }
+  }
+
+  Future<DocumentSnapshot<Map>> getHistory() async {
+    try {
+      final currentUser = _firebaseAuth.currentUser;
+      final history = await historyRef.doc(currentUser?.uid).get();
+
+      return history;
     } on FirebaseException {
       rethrow;
     }

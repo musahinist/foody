@@ -30,6 +30,14 @@ class AddOrderToBasketEvent extends ProductEvent {
   List<Object> get props => [];
 }
 
+class AddOrderToHistoryEvent extends ProductEvent {
+  const AddOrderToHistoryEvent({required this.order});
+  final order;
+
+  @override
+  List<Object> get props => [];
+}
+
 class RemovwOrderFromBasketEvent extends ProductEvent {
   const RemovwOrderFromBasketEvent({required this.order});
   final order;

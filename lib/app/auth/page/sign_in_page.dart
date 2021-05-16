@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:get/route_manager.dart';
 import 'package:video_player/video_player.dart';
 
@@ -128,42 +131,64 @@ class LoginWidget extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                if (Platform.isIOS)
+                  IconElevatedButton(
+                    onPressed: () {},
+                    title: const Text(
+                      'With Apple',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    icon: const Icon(
+                      FontAwesome.apple,
+                      color: Colors.white,
+                    ),
+                    color: Colors.grey[50],
+                  ),
+                if (Platform.isAndroid)
+                  IconElevatedButton(
+                    onPressed: () {
+                      BlocProvider.of<AuthBloc>(context)
+                          .add(const GoogleSignInEvent());
+                    },
+                    title: const Text(
+                      'With Google',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    icon: const Icon(
+                      FontAwesome.google,
+                      color: Colors.white,
+                    ),
+                    color: const Color(0xFF4285F4),
+                  ),
                 IconElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => PhoneRegisterPage()));
+                    // Navigator.push(context,
+                    //     MaterialPageRoute(builder: (context) => LoginPage()));
+                    Get.toNamed(LoginPage.$PATH);
                   },
-                  title: const Text('With Apple'),
-                  icon: const Icon(Icons.ac_unit),
-                  color: Colors.grey[50],
-                ),
-                IconElevatedButton(
-                  onPressed: () {
-                    BlocProvider.of<AuthBloc>(context)
-                        .add(const GoogleSignInEvent());
-                  },
-                  title: const Text('With Google'),
-                  icon: const Icon(Icons.ac_unit),
-                  color: const Color(0xFF4285F4),
+                  title: const Text(
+                    'With Email',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                  icon: const Icon(
+                    Icons.email,
+                    color: Colors.white,
+                  ),
                 ),
               ],
             ),
           ),
           const SizedBox(height: 24),
-          SizedBox(
-            width: 300,
-            child: IconElevatedButton(
-              onPressed: () {
-                // Navigator.push(context,
-                //     MaterialPageRoute(builder: (context) => LoginPage()));
-                Get.toNamed(LoginPage.$PATH);
-              },
-              title: const Text('Countinue with Email'),
-              icon: const Icon(Icons.ac_unit),
-            ),
-          ),
+          // SizedBox(
+          //   width: 300,
+          //   child:
+          // ),
           SizedBox(
             width: 300,
             child: IconElevatedButton(
@@ -174,8 +199,16 @@ class LoginWidget extends StatelessWidget {
                     MaterialPageRoute(
                         builder: (context) => PhoneRegisterPage()));
               },
-              title: const Text('Countinue with phone'),
-              icon: const Icon(Icons.ac_unit),
+              title: const Text(
+                'Countinue with phone',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+              icon: const Icon(
+                Icons.phone_android,
+                color: Colors.white,
+              ),
             ),
           ),
           const SizedBox(height: 24),

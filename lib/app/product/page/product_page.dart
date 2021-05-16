@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foody/app/home/data/model/product.dart';
+import 'package:foody/app/home/widget/outline_stadium_button_wdiget.dart';
 import 'package:foody/app/product/bloc/product_bloc.dart';
 import 'package:foody/config/globals.dart';
 import 'package:get/route_manager.dart';
@@ -26,7 +27,7 @@ class _ProductPageState extends State<ProductPage> {
   List<bool> isSelected = [false, false, false, false];
   List<String> selecetedToppings = [];
   bool isLiked = false;
-  double price = 45.00;
+  double toppingprice = 0;
   int itemCount = 0;
   // final product = Get.arguments as Product;
 
@@ -82,7 +83,9 @@ class _ProductPageState extends State<ProductPage> {
               },
             ),
           ),
-          const SliverAppBarWidget(),
+          SliverAppBarWidget(
+            imgurl: widget.product.imgurl,
+          ),
           SliverPadding(
             padding: const EdgeInsets.all(16),
             sliver: SliverList(
@@ -140,7 +143,7 @@ class _ProductPageState extends State<ProductPage> {
                                   .add(widget.product.toppings[index])
                               : selecetedToppings
                                   .remove(widget.product.toppings[index]);
-                          isSelected[index] ? price++ : price--;
+                          isSelected[index] ? toppingprice++ : toppingprice--;
                           setState(() {});
                         },
                       );
@@ -150,39 +153,43 @@ class _ProductPageState extends State<ProductPage> {
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ItemCounterWidget(),
-                      Text('TL $price',
+                      //    ItemCounterWidget(),
+                      Text('TL ${widget.product.price + toppingprice}',
                           style: const TextStyle(
                               fontSize: 18, fontWeight: FontWeight.bold)),
                       SizedBox(
+                        width: 12,
+                      ),
+                      SizedBox(
                         height: 32,
                         // width: 32,
-                        child: ElevatedButton(
+                        child: ButtonOutlineStadiumWidget(
+                          title: 'Add To Basket',
+                          color: Colors.amber,
                           onPressed: () {
                             BlocProvider.of<ProductBloc>(context)
                                 .add(AddOrderToBasketEvent(order: {
                               "time": Timestamp.now(),
                               "name": widget.product.name,
                               "imgurl": widget.product.imgurl,
-                              "totalAmount": price,
+                              "totalAmount":
+                                  widget.product.price + toppingprice,
                               "isPayed": false,
                               "toppings": selecetedToppings,
+                              "restaurant": widget.product.restaurant
                             }));
 
                             itemCount++;
                             setState(() {});
                           },
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all(Colors.amber[700]),
-                            shape: MaterialStateProperty.all(
-                                const StadiumBorder()),
-                          ),
-                          child: const Center(
-                            child: Text('Add To Basket'),
-                          ),
+                          // style: ButtonStyle(
+                          //   backgroundColor:
+                          //       MaterialStateProperty.all(Colors.amber[700]),
+                          //   shape: MaterialStateProperty.all(
+                          //       const StadiumBorder()),
+                          // ),
                         ),
                       ),
                     ],

@@ -3,6 +3,7 @@ import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
 import 'package:get/route_manager.dart';
 
 import '../../home/page/home_page.dart';
+import 'sms_code_input_page.dart';
 
 class PhoneRegisterPage extends StatefulWidget {
   @override
@@ -76,12 +77,11 @@ class _PhoneRegisterPageState extends State<PhoneRegisterPage> {
                     child: RaisedButton(
                       onPressed: isButtonActive
                           ? () {
-                              // Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) =>
-                              //             SmsCodeInputPage()));
-                              Get.offAllNamed(HomePage.$PATH);
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          SmsCodeInputPage()));
                             }
                           : null,
                       shape: const StadiumBorder(),

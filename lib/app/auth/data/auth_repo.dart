@@ -66,6 +66,8 @@ class AuthRepo {
       final userRef = FirebaseFirestore.instance.collection('users');
       final orderRef = FirebaseFirestore.instance.collection('orders');
       final favRef = FirebaseFirestore.instance.collection('favorites');
+      final historyRef = FirebaseFirestore.instance.collection('history');
+      final deliveryRef = FirebaseFirestore.instance.collection('delivery');
       userRef.doc(user?.uid).set({
         'email': user?.email,
         'name': user?.displayName,
@@ -74,10 +76,8 @@ class AuthRepo {
       });
       orderRef.doc(user?.uid).set({'orders': []});
       favRef.doc(user?.uid).set({'favorites': []});
-      // final products = await productRef.get().then((snapshot) => snapshot.docs
-      //     .map<Product>((doc) => Product.fromMap(doc.data()))
-      //     .toList());
-      // return products;
+      historyRef.doc(user?.uid).set({'history': []});
+      deliveryRef.doc(user?.uid).set({'delivery': []});
     } on FirebaseException {
       rethrow;
     }

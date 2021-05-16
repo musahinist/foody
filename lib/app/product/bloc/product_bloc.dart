@@ -18,22 +18,32 @@ class ProductBloc extends Bloc<ProductEvent, ProductState> {
   ) async* {
     if (event is GetOrdersEvent) {
       final orders = await _productRepo.getOrders();
+      final history = await _productRepo.getHistory();
 
-      yield OrderLoadedState(orders: orders);
+      yield OrderLoadedState(orders: orders, history: history);
     }
+
     if (event is AddOrderToBasketEvent) {
       yield OrderLoadingState();
       await _productRepo.addToBasket(event.order);
       final orders = await _productRepo.getOrders();
-      yield OrderLoadedState(orders: orders);
       // yield OrderLoadedState(orders: orders);
+      add(GetOrdersEvent());
     }
     if (event is RemovwOrderFromBasketEvent) {
       yield OrderLoadingState();
       await _productRepo.removeFromBasket(event.order);
-      final orders = await _productRepo.getOrders();
-      yield OrderLoadedState(orders: orders);
-      // yield OrderLoadedState(orders: orders);
+      //  final orders = await _productRepo.getOrders();
+      //  yield OrderLoadedState(orders: orders);
+      add(GetOrdersEvent());
+    }
+    if (event is AddOrderToHistoryEvent) {
+      yield OrderLoadingState();
+      await _productRepo.addToHistory(event.order);
+      await _productRepo.removeFromBasket(event.order);
+      //  final orders = await _productRepo.getOrders();
+      //  yield OrderLoadedState(orders: orders);
+      add(GetOrdersEvent());
     }
   }
 }

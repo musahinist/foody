@@ -10,12 +10,17 @@ import '../../../../util/validator_util.dart';
 import '../../bloc/authentication_bloc.dart';
 import 'login_controller.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({
     Key? key,
   }) : super(key: key);
   static const String $PATH = '/login';
-  // final LoginController _c = Get.put(LoginController());
+
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return AuthLayout(
@@ -32,6 +37,17 @@ class LoginForm extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
+        Align(
+          alignment: AlignmentDirectional.topStart,
+          child: Obx(() => Text(
+                _c.buttonLabel.value,
+                style: TextStyle(
+                  fontSize: 36,
+                  fontWeight: FontWeight.bold,
+                ),
+              )),
+        ),
+        const SizedBox(height: 24),
         FormCard(
           children: <Widget>[
             //  const LanguageIconDropDownPickerWidget(),
@@ -68,16 +84,28 @@ class LoginForm extends StatelessWidget {
                 ],
               ),
             ),
-            PrimaryButtonWidget(
-              color: Colors.amber,
-              labelText: 'Sign In',
+            Obx(() => PrimaryButtonWidget(
+                  color: Colors.amber,
+                  labelText: _c.buttonLabel.value,
+                  onPressed: () {
+                    _c.validate();
+                    BlocProvider.of<AuthBloc>(context).add(_c.haveAccount.value
+                        ? EmailSignInEvent(
+                            email: _c.emailController.text,
+                            password: _c.passwordController.text)
+                        : EmailSignUpEvent(
+                            email: _c.emailController.text,
+                            password: _c.passwordController.text));
+                  },
+                )),
+            TextButton(
               onPressed: () {
-                _c.validate();
-                BlocProvider.of<AuthBloc>(context).add(EmailSignUpEvent(
-                    email: _c.emailController.text,
-                    password: _c.passwordController.text));
+                _c.toggleAuth();
               },
-            )
+              child: Obx(() => Text(_c.haveAccount.value
+                  ? "Create an Account: Sing Up"
+                  : "Have an Account: Sign In")),
+            ),
           ],
         ),
         // const SizedBox(height: 24),

@@ -11,7 +11,7 @@ import 'util/log/simple_bloc_observer.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  await GetStorage.init('MyPref');
+  await GetStorage.init();
   Bloc.observer = SimpleBlocObserver();
   Log.init();
   runApp(MyApp());

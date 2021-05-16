@@ -1,23 +1,30 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/route_manager.dart';
+
+import 'package:foody/app/product/bloc/product_bloc.dart';
 
 import '../../home/page/home_page.dart';
 
 class CheckoutPage extends StatelessWidget {
   const CheckoutPage({
     Key? key,
+    required this.orders,
+    required this.totalPayment,
   }) : super(key: key);
+  final List orders;
+  final double totalPayment;
   static const String $PATH = 'checkout';
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('CheckOut'),
-      ),
-      body: Padding(
+    return Container(
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(10)),
+      child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Container(
               height: 160,
@@ -41,9 +48,9 @@ class CheckoutPage extends StatelessWidget {
                       ),
                     ),
                     Row(
-                      children: const [
+                      children: [
                         Text(
-                          'TL 135.00',
+                          '$totalPayment',
                           style: TextStyle(
                               color: Colors.white,
                               fontSize: 18,
@@ -73,6 +80,8 @@ class CheckoutPage extends StatelessWidget {
             const SizedBox(height: 24),
             ElevatedButton(
               onPressed: () {
+                BlocProvider.of<ProductBloc>(context)
+                    .add(AddOrderToHistoryEvent(order: orders));
                 Get.offAllNamed(HomePage.$PATH);
                 Get.dialog(
                   Dialog(
@@ -102,7 +111,7 @@ class CheckoutPage extends StatelessWidget {
               child: const Center(
                 child: Padding(
                   padding: EdgeInsets.all(16),
-                  child: Text('Pay All'),
+                  child: Text('Pay'),
                 ),
               ),
             ),

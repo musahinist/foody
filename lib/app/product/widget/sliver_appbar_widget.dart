@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 class SliverAppBarWidget extends StatelessWidget {
   const SliverAppBarWidget({
     Key? key,
+    required this.imgurl,
   }) : super(key: key);
+  final String imgurl;
 
   @override
   Widget build(BuildContext context) {
@@ -11,8 +13,9 @@ class SliverAppBarWidget extends StatelessWidget {
     return SliverAppBar(
       expandedHeight: 200.0,
       backgroundColor: Colors.amber,
-      elevation: 0,
+      elevation: 0, automaticallyImplyLeading: false,
       pinned: true,
+
       flexibleSpace: FlexibleSpaceBar(
         title:
             const Text('Burger Story', style: TextStyle(color: Colors.white)),
@@ -25,11 +28,11 @@ class SliverAppBarWidget extends StatelessWidget {
 
         centerTitle: true,
         background: Container(
-          decoration: const BoxDecoration(
+          decoration: BoxDecoration(
             //   color: Colors.black,
             image: DecorationImage(
               image: NetworkImage(
-                'https://s01.sgp1.cdn.digitaloceanspaces.com/article/143395-pysnzzzleh-1593090551.jpg',
+                imgurl,
               ),
               fit: BoxFit.cover,
             ),

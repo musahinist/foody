@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foody/app/product/bloc/product_bloc.dart';
 import 'package:foody/app/product/page/product_page.dart';
 import 'package:foody/common/widget/restaaurant_card_widget.dart';
 import 'package:get/route_manager.dart';
@@ -34,7 +36,14 @@ class FavoritesPage extends StatelessWidget {
                 return RestaurantCardWidget(
                     product: product,
                     onPressed: () {
-                      Get.toNamed(ProductPage.$PATH);
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (_) {
+                        return BlocProvider.value(
+                            value: BlocProvider.of<ProductBloc>(context),
+                            child: ProductPage(
+                              product: product,
+                            ));
+                      }));
                     });
               }, childCount: products.length),
             )

@@ -7,7 +7,7 @@ import '../../app/auth/page/login/login_page.dart';
 import '../../app/auth/page/onboarding_page.dart';
 import '../../app/auth/page/sign_in_page.dart';
 import '../../app/auth/page/splash_page.dart';
-import '../../app/checkout/page/checkout_page.dart';
+import '../../app/product/page/checkout_page.dart';
 import '../../app/home/bloc/home_bloc.dart';
 import '../../app/home/page/basket_page.dart';
 import '../../app/home/page/home_page.dart';
@@ -79,10 +79,10 @@ class AppRouter {
       name: TrackingPage.$PATH,
       page: () => const TrackingPage(),
     ),
-    GetPage(
-      name: CheckoutPage.$PATH,
-      page: () => const CheckoutPage(),
-    ),
+    // GetPage(
+    //   name: CheckoutPage.$PATH,
+    //   page: () => const CheckoutPage(),
+    // ),
     GetPage(
       name: TempPage.$PATH,
       page: () => BlocProvider<TempBloc>(

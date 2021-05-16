@@ -59,7 +59,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             email: event.email, password: event.password);
         Get.offAllNamed(SplashPage.$PATH);
       } on FirebaseAuthException catch (e) {
-        Get.snackbar("Error", e.message!);
+        Get.snackbar('Error', e.message!);
       }
     }
     if (event is SignOutEvent) {
