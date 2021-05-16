@@ -1,4 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foody/app/product/bloc/product_bloc.dart';
 import 'package:get/get.dart';
 
 import '../../app/auth/bloc/authentication_bloc.dart';
@@ -45,17 +46,31 @@ class AppRouter {
         child: const LoginPage(),
       ),
     ),
+    // GetPage(
+    //   name: HomePage.$PATH,
+    //   page: () => BlocProvider<HomePageDataBloc>(
+    //       create: (context) =>
+    //           HomePageDataBloc()..add(const HomePageDataRequestedEvent()),
+    //       child: const HomePage()),
+    // ),
     GetPage(
-      name: HomePage.$PATH,
-      page: () => BlocProvider<HomePageDataBloc>(
-          create: (context) =>
-              HomePageDataBloc()..add(const HomePageDataRequestedEvent()),
-          child: const HomePage()),
-    ),
-    GetPage(
-      name: ProductPage.$PATH,
-      page: () => const ProductPage(),
-    ),
+        name: HomePage.$PATH,
+        page: () => MultiBlocProvider(
+              providers: [
+                BlocProvider<HomePageDataBloc>(
+                  create: (context) => HomePageDataBloc()
+                    ..add(const HomePageDataRequestedEvent()),
+                ),
+                BlocProvider<ProductBloc>(
+                  create: (context) => ProductBloc()..add(GetOrdersEvent()),
+                )
+              ],
+              child: const HomePage(),
+            )),
+    // GetPage(
+    //   name: ProductPage.$PATH,
+    //   page: () => const ProductPage(),
+    // ),
     GetPage(
       name: BasketPage.$PATH,
       page: () => const BasketPage(),

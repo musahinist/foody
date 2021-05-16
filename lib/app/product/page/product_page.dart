@@ -1,4 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foody/app/home/data/model/product.dart';
+import 'package:foody/app/product/bloc/product_bloc.dart';
+import 'package:foody/config/globals.dart';
 import 'package:get/route_manager.dart';
 
 import '../../../common/widget/item_counter_widget.dart';
@@ -8,18 +13,22 @@ import '../widget/sliver_appbar_widget.dart';
 class ProductPage extends StatefulWidget {
   const ProductPage({
     Key? key,
+    required this.product,
   }) : super(key: key);
   static const String $PATH = 'product';
+  final Product product;
 
   @override
   _ProductPageState createState() => _ProductPageState();
 }
 
 class _ProductPageState extends State<ProductPage> {
-  List<bool> isSelected = [false, false, false];
+  List<bool> isSelected = [false, false, false, false];
+  List<String> selecetedToppings = [];
   bool isLiked = false;
   double price = 45.00;
   int itemCount = 0;
+  // final product = Get.arguments as Product;
 
   @override
   Widget build(BuildContext context) {
@@ -27,29 +36,51 @@ class _ProductPageState extends State<ProductPage> {
       floatingActionButton: Stack(
         children: [
           FloatingActionButton(
-            heroTag: "basket",
+            heroTag: 'basket',
             onPressed: () {
-              Get.toNamed(BasketPage.$PATH);
+              Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                return BlocProvider.value(
+                    value: BlocProvider.of<ProductBloc>(context),
+                    child: BasketPage());
+              }));
             },
             child: const Icon(Icons.shopping_bag),
           ),
-          CircleAvatar(
-            radius: 12,
-            backgroundColor: Colors.blue,
-            child: Text(
-              '$itemCount',
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+          BlocListener<ProductBloc, ProductState>(
+            listener: (context, state) {
+              if (state is OrderLoadedState) {
+                //  setState(() {});
+              }
+            },
+            child: BlocBuilder<ProductBloc, ProductState>(
+              builder: (context, state) {
+                return CircleAvatar(
+                  radius: 12,
+                  backgroundColor: Colors.blue,
+                  child: Text(
+                    "$orderCount",
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        fontSize: 10, fontWeight: FontWeight.bold),
+                  ),
+                );
+              },
             ),
           )
         ],
       ),
       body: CustomScrollView(
         slivers: [
-          const SliverAppBar(
+          SliverAppBar(
             elevation: 0,
             //  floating: true,
             pinned: true,
+            leading: IconButton(
+              icon: Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
           ),
           const SliverAppBarWidget(),
           SliverPadding(
@@ -57,8 +88,8 @@ class _ProductPageState extends State<ProductPage> {
             sliver: SliverList(
               delegate: SliverChildListDelegate.fixed([
                 ListTile(
-                  title: const Text(
-                    'Beef Cheese Burger',
+                  title: Text(
+                    widget.product.name,
                     style: TextStyle(fontSize: 24),
                   ),
                   subtitle: Row(
@@ -87,48 +118,34 @@ class _ProductPageState extends State<ProductPage> {
                         )),
                   ),
                 ),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.all(16.0),
-                  child: Text(
-                      'Food consist of one or more cooked patties of ground meat, usualy beef placed inside a sliced bread roll or bun'),
+                  child: Text(widget.product.description),
                 ),
                 ExpansionTile(
                   title: const Text('Toppings'),
-                  children: [
-                    ListTile(
-                      title: const Text('Pickles'),
-                      trailing: isSelected[0]
-                          ? const Icon(Icons.check_circle, color: Colors.green)
-                          : const Icon(Icons.add),
-                      onTap: () {
-                        isSelected[0] = !isSelected[0];
-                        isSelected[0] ? price++ : price--;
-                        setState(() {});
-                      },
-                    ),
-                    ListTile(
-                      title: const Text('Lettuce'),
-                      trailing: isSelected[1]
-                          ? const Icon(Icons.check_circle, color: Colors.green)
-                          : const Icon(Icons.add),
-                      onTap: () {
-                        isSelected[1] = !isSelected[1];
-                        isSelected[1] ? price++ : price--;
-                        setState(() {});
-                      },
-                    ),
-                    ListTile(
-                      title: const Text('Onions'),
-                      trailing: isSelected[2]
-                          ? const Icon(Icons.check_circle, color: Colors.green)
-                          : const Icon(Icons.add),
-                      onTap: () {
-                        isSelected[2] = !isSelected[2];
-                        isSelected[2] ? price++ : price--;
-                        setState(() {});
-                      },
-                    ),
-                  ],
+                  children:
+                      List.generate(widget.product.toppings.length, (index) {
+                    {
+                      return ListTile(
+                        title: Text(widget.product.toppings[index]),
+                        trailing: isSelected[index]
+                            ? const Icon(Icons.check_circle,
+                                color: Colors.green)
+                            : const Icon(Icons.add),
+                        onTap: () {
+                          isSelected[index] = !isSelected[index];
+                          isSelected[index]
+                              ? selecetedToppings
+                                  .add(widget.product.toppings[index])
+                              : selecetedToppings
+                                  .remove(widget.product.toppings[index]);
+                          isSelected[index] ? price++ : price--;
+                          setState(() {});
+                        },
+                      );
+                    }
+                  }),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16.0),
@@ -144,6 +161,16 @@ class _ProductPageState extends State<ProductPage> {
                         // width: 32,
                         child: ElevatedButton(
                           onPressed: () {
+                            BlocProvider.of<ProductBloc>(context)
+                                .add(AddOrderToBasketEvent(order: {
+                              "time": Timestamp.now(),
+                              "name": widget.product.name,
+                              "imgurl": widget.product.imgurl,
+                              "totalAmount": price,
+                              "isPayed": false,
+                              "toppings": selecetedToppings,
+                            }));
+
                             itemCount++;
                             setState(() {});
                           },

@@ -102,7 +102,7 @@ class CheckoutPage extends StatelessWidget {
               child: const Center(
                 child: Padding(
                   padding: EdgeInsets.all(16),
-                  child: Text('CheckOut'),
+                  child: Text('Pay All'),
                 ),
               ),
             ),

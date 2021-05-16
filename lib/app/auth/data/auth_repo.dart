@@ -64,13 +64,16 @@ class AuthRepo {
     try {
       final user = _firebaseAuth.currentUser;
       final userRef = FirebaseFirestore.instance.collection('users');
-
+      final orderRef = FirebaseFirestore.instance.collection('orders');
+      final favRef = FirebaseFirestore.instance.collection('favorites');
       userRef.doc(user?.uid).set({
-        "email": user?.email,
-        "name": user?.displayName,
-        "imgurl": user?.photoURL,
-        "phone": user?.phoneNumber,
+        'email': user?.email,
+        'name': user?.displayName,
+        'imgurl': user?.photoURL,
+        'phone': user?.phoneNumber,
       });
+      orderRef.doc(user?.uid).set({'orders': []});
+      favRef.doc(user?.uid).set({'favorites': []});
       // final products = await productRef.get().then((snapshot) => snapshot.docs
       //     .map<Product>((doc) => Product.fromMap(doc.data()))
       //     .toList());

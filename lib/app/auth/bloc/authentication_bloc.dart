@@ -50,6 +50,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     }
     if (event is EmailSignUpEvent) {
       await _authRepo.signUp(email: event.email, password: event.password);
+      Get.offAllNamed(SplashPage.$PATH);
       yield const AuthanticatedState();
     }
     if (event is EmailSignInEvent) {

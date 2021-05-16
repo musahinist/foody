@@ -73,7 +73,7 @@ class LoginForm extends StatelessWidget {
               labelText: 'Sign In',
               onPressed: () {
                 _c.validate();
-                BlocProvider.of<AuthBloc>(context).add(EmailSignInEvent(
+                BlocProvider.of<AuthBloc>(context).add(EmailSignUpEvent(
                     email: _c.emailController.text,
                     password: _c.passwordController.text));
               },

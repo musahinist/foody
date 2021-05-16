@@ -43,8 +43,8 @@ class RestaurantCardWidget extends StatelessWidget {
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Text(
+                    children: [
+                      const Text(
                         '25-30 min.',
                         style: TextStyle(
                           fontSize: 14,
@@ -52,7 +52,7 @@ class RestaurantCardWidget extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        '₺35.',
+                        '₺${product.price}',
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -66,19 +66,19 @@ class RestaurantCardWidget extends StatelessWidget {
           ),
           ListTile(
             title: Text(
-              'Big Burger',
+              product.name,
               style: Theme.of(context).textTheme.headline6,
             ),
-            subtitle: const Text("McDonald's"),
+            subtitle: Text(product.restaurant),
             leading: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Icon(
+              children: [
+                const Icon(
                   Icons.star,
                   color: Colors.amber,
                 ),
                 Text(
-                  '4.7',
+                  '${product.rank}',
                   style: TextStyle(fontWeight: FontWeight.bold),
                 ),
               ],

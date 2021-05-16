@@ -1,6 +1,12 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foody/app/product/bloc/product_bloc.dart';
+import 'package:foody/app/product/data/product_repo.dart';
+import 'package:foody/config/globals.dart';
+import 'package:foody/util/http/http_manager.dart';
 import 'package:get/route_manager.dart';
 
 import '../../../common/widget/pageview_dot_indicator_widget.dart';
@@ -33,6 +39,15 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  // pushToProductPage() {
+  //   Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+  //     return BlocProvider.value(
+  //         value: BlocProvider.of<ProductBloc>(context), child: ProductPage());
+  //   })).then((value) {
+  //     setState(() {});
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,7 +56,10 @@ class _HomePageState extends State<HomePage> {
           if (state is HomePageDataLoadedState) {
             switch (_selectedIndex) {
               case 0:
-                return MenuPage(products: state.products);
+                return MenuPage(
+                  products: state.products,
+                  //  pushProductPage: pushToProductPage,
+                );
               case 1:
                 return FavoritesPage(products: state.products);
               case 2:
@@ -49,7 +67,10 @@ class _HomePageState extends State<HomePage> {
               case 3:
                 return const ProfilePage();
               default:
-                return MenuPage(products: state.products);
+                return MenuPage(
+                  products: state.products,
+                  //   pushProductPage: pushToProductPage,
+                );
             }
           }
           return const Center(child: CircularProgressIndicator.adaptive());
@@ -70,13 +91,13 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.white,
               ),
             ),
-            CircleAvatar(
+            const CircleAvatar(
               radius: 10,
               backgroundColor: Colors.blue,
               child: Text(
                 '1',
                 textAlign: TextAlign.center,
-                style: const TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
               ),
             )
           ],
@@ -111,25 +132,35 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           ),
-          Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: const [
-                SizedBox(),
-                IgnorePointer(
-                  child: CircleAvatar(
-                    radius: 10,
-                    backgroundColor: Colors.blue,
-                    child: Text(
-                      '1',
-                      style:
-                          TextStyle(fontSize: 10, fontWeight: FontWeight.bold),
-                    ),
+          BlocBuilder<ProductBloc, ProductState>(
+            builder: (context, state) {
+              if (state is OrderLoadedState) {
+                return Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      SizedBox(),
+                      IgnorePointer(
+                        child: Visibility(
+                          visible: orderCount != 0,
+                          child: CircleAvatar(
+                            radius: 10,
+                            backgroundColor: Colors.blue,
+                            child: Text(
+                              '${orderCount}',
+                              style: TextStyle(
+                                  fontSize: 10, fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
+                );
+              }
+              return const SizedBox();
+            },
           )
         ],
       ),
@@ -141,8 +172,11 @@ class MenuPage extends StatelessWidget {
   const MenuPage({
     Key? key,
     required this.products,
+    //   required this.pushProductPage,
   }) : super(key: key);
   final List<Product> products;
+//  final VoidCallback pushProductPage;
+
   @override
   Widget build(BuildContext context) {
     //  final state = context.watch<HomePageDataBloc>().state;
@@ -162,7 +196,13 @@ class MenuPage extends StatelessWidget {
               return RestaurantCardWidget(
                   product: product,
                   onPressed: () {
-                    Get.toNamed(ProductPage.$PATH);
+                    Navigator.of(context).push(MaterialPageRoute(builder: (_) {
+                      return BlocProvider.value(
+                          value: BlocProvider.of<ProductBloc>(context),
+                          child: ProductPage(
+                            product: product,
+                          ));
+                    }));
                   });
             }, childCount: products.length),
           )
