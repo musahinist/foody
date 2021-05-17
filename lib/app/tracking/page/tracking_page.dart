@@ -11,7 +11,12 @@ class TrackingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[200],
+      //  backgroundColor: Colors.grey[200],
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
       body: Stack(
         alignment: AlignmentDirectional.bottomEnd,
         children: [
@@ -29,82 +34,92 @@ class TrackingPage extends StatelessWidget {
           //           fit: BoxFit.fitWidth)),
           //   //   color: Colors.red,
           // ),
-          DraggableScrollableSheet(
-            // expand: true,
-            initialChildSize: 0.1,
-            minChildSize: 0.1,
-            maxChildSize: 0.45,
-            builder: (contex, scrollctrl) {
-              return Container(
-                decoration: BoxDecoration(
-                  color: Colors.lightGreen[50],
-                  boxShadow: [
-                    BoxShadow(
-                        color: Colors.grey.withOpacity(.2),
-                        offset: Offset(1, 1),
-                        spreadRadius: 2,
-                        blurRadius: 2)
-                  ],
-                  borderRadius: BorderRadius.vertical(
-                    top: Radius.circular(16),
-                  ),
-                ),
-                child: NotificationListener<OverscrollIndicatorNotification>(
-                  onNotification: (OverscrollIndicatorNotification overscroll) {
-                    overscroll.disallowGlow();
-                    return true;
-                  },
-                  child: ListView(
-                    controller: scrollctrl,
-                    children: [
-                      Center(
-                        child: Container(
-                          height: 5,
-                          width: 30,
-                          decoration: BoxDecoration(
-                              color: Colors.grey,
-                              borderRadius: BorderRadius.circular(5)),
-                        ),
-                      ),
-                      ListTile(
-                          leading:
-                              Icon(Icons.timelapse_sharp, color: Colors.amber),
-                          title: Text('Delivery Time',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold)),
-                          trailing: Text('10 min',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.bold))),
-                      Divider(),
-                      ListTile(
-                        leading: Icon(
-                          Icons.check_circle,
-                          color: Colors.green,
-                        ),
-                        title: Text('Order Confirmed'),
-                        subtitle: Text('Your order has been recevied'),
-                      ),
-                      ListTile(
-                        leading: Icon(
-                          Icons.check_circle,
-                          color: Colors.green,
-                        ),
-                        title: Text('Delivery Prepared'),
-                        subtitle: Text('Your order has been prepared'),
-                      ),
-                      ListTile(
-                        leading: Icon(
-                          Icons.update,
-                          // color: Colors.green,
-                        ),
-                        title: Text('Delivery In Porgress'),
-                        subtitle: Text('Hang on! Your food i on the way'),
-                      )
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: DraggableScrollableSheet(
+              expand: true,
+              initialChildSize: 0.1,
+              minChildSize: 0.1,
+              maxChildSize: 0.45,
+              builder: (contex, scrollctrl) {
+                return Container(
+                  padding: EdgeInsets.only(top: 15),
+                  decoration: BoxDecoration(
+                    color: Colors.lightGreen[50],
+                    boxShadow: [
+                      BoxShadow(
+                          color: Colors.grey.withOpacity(.2),
+                          offset: Offset(1, 1),
+                          spreadRadius: 2,
+                          blurRadius: 2)
                     ],
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(16),
+                    ),
                   ),
-                ),
-              );
-            },
+                  child: NotificationListener<OverscrollIndicatorNotification>(
+                    onNotification:
+                        (OverscrollIndicatorNotification overscroll) {
+                      overscroll.disallowGlow();
+                      return true;
+                    },
+                    child: SingleChildScrollView(
+                      controller: scrollctrl,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Center(
+                            child: Container(
+                              height: 5,
+                              width: 30,
+                              decoration: BoxDecoration(
+                                  color: Colors.grey,
+                                  borderRadius: BorderRadius.circular(5)),
+                            ),
+                          ),
+                          ListTile(
+                              leading: Icon(Icons.timelapse_sharp,
+                                  color: Colors.amber),
+                              title: Text('Delivery Time',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold)),
+                              trailing: Text('10 min',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold))),
+                          Divider(),
+                          ListTile(
+                            leading: Icon(
+                              Icons.check_circle,
+                              color: Colors.green,
+                            ),
+                            title: Text('Order Confirmed'),
+                            subtitle: Text('Your order has been recevied'),
+                          ),
+                          ListTile(
+                            leading: Icon(
+                              Icons.check_circle,
+                              color: Colors.green,
+                            ),
+                            title: Text('Delivery Prepared'),
+                            subtitle: Text('Your order has been prepared'),
+                          ),
+                          ListTile(
+                            leading: Icon(
+                              Icons.update,
+                              // color: Colors.green,
+                            ),
+                            title: Text('Delivery In Porgress'),
+                            subtitle: Text('Hang on! Your food i on the way'),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),
