@@ -30,10 +30,10 @@ class _BasketPageState extends State<BasketPage> {
           builder: (context, state) {
             if (state is OrderLoadedState) {
               orders = state.orders.data()!["orders"];
-              history = state.history.data()!["history"];
+              history = state.history.data()!["history"] ?? [];
               return _Body(
                   orders: state.orders.data()!["orders"],
-                  history: state.history.data()!["history"]);
+                  history: state.history.data()!["history"] ?? []);
             }
             return _Body(
               orders: orders,
