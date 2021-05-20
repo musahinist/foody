@@ -1,12 +1,8 @@
-import 'dart:async';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foody/app/product/bloc/product_bloc.dart';
-import 'package:foody/app/product/data/product_repo.dart';
 import 'package:foody/config/globals.dart';
-import 'package:foody/util/http/http_manager.dart';
 import 'package:get/route_manager.dart';
 
 import '../../../common/widget/pageview_dot_indicator_widget.dart';
