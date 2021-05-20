@@ -5,7 +5,6 @@ import 'package:get/route_manager.dart';
 import 'package:foody/app/home/widget/outline_stadium_button_wdiget.dart';
 import 'package:foody/app/product/bloc/product_bloc.dart';
 
-import '../../../common/widget/item_counter_widget.dart';
 import '../../product/page/checkout_page.dart';
 
 class BasketPage extends StatefulWidget {
