@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foody/app/product/bloc/product_bloc.dart';
 import 'package:foody/app/product/page/product_page.dart';
 import 'package:foody/common/widget/restaaurant_card_widget.dart';
-import 'package:get/route_manager.dart';
 
 import '../../../common/widget/search_appbar_widget.dart';
 import '../data/model/product.dart';
